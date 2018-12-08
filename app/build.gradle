@@ -16,7 +16,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "apiEndppoint", '\"\"'
+        buildConfigField "String", "apiEndppoint", '\"https://www.codewars.com/api/v1/\"'
     }
     buildTypes {
         release {
@@ -33,6 +33,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    //app modules
+    implementation project(':model')
+    implementation project(':domain')
+
     //android
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
@@ -44,7 +48,6 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$supportVersion"
     implementation "com.android.support:design:$supportVersion"
     implementation "com.android.support:support-v4:$supportVersion"
-    implementation 'com.android.support:support-v4:28.0.0'
     kapt "android.arch.lifecycle:compiler:$lifeCycleVersion"
 
     //test dependencies
@@ -63,15 +66,9 @@ dependencies {
     implementation "com.google.dagger:dagger-android:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
-    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.17'
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$daggerVersion"
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
-    //retrofit
-    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVer"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVer"
-    implementation "com.squareup.retrofit2:converter-scalars:$retrofitVer"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
 
     //RxJava
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"

@@ -1,0 +1,57 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+
+
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+
+    //app modules
+    implementation project(':model')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    //dagger2
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.17'
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+
+    //retrofit
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVer"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVer"
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofitVer"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+
+    //test dependencies
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "junit:junit:$jUnitVersion"
+    androidTestImplementation "com.android.support.test:runner:$testRunnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoCoreVersion"
+}

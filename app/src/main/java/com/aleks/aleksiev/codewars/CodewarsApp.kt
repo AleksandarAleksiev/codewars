@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.Application
 import com.aleks.aleksiev.codewars.di.component.AppComponent
 import com.aleks.aleksiev.codewars.di.component.DaggerAppComponent
+import com.aleks.aleksiev.codewars.domain.di.NetworkModule
+import com.aleks.aleksiev.codewars.model.di.ModelModule
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -27,6 +29,8 @@ class CodewarsApp : Application(), HasActivityInjector {
         component = DaggerAppComponent
             .builder()
             .application(this)
+            .model(ModelModule(this))
+            .network(NetworkModule(this, BuildConfig.apiEndppoint))
             .build()
 
         component.inject(this)

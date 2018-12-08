@@ -12,7 +12,6 @@ import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import java.util.UUID
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), HasSupportFragmentInjector {
