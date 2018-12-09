@@ -35,6 +35,10 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         mainViewModel.search()
     }
 
+    fun taskInProgress(inProgress: Boolean) {
+        mainViewModel.viewState.taskInProgress = inProgress
+    }
+
     // region HasSupportFragmentInjector
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
     // endregion

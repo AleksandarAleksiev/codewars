@@ -1,21 +1,32 @@
 package com.aleks.aleksiev.codewars.presentation.challenges
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.arch.paging.PagedList
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.aleks.aleksiev.codewars.R
-import com.aleks.aleksiev.codewars.databinding.FragmentMemberBinding
+import com.aleks.aleksiev.codewars.databinding.FragmentChallengesBinding
+import com.aleks.aleksiev.codewars.presentation.challenges.model.CompletedChallengeModel
 import com.aleks.aleksiev.codewars.presentation.common.BaseFragment
 import com.aleks.aleksiev.codewars.utils.BundleDelegate
+import com.aleks.aleksiev.codewars.utils.NetworkState
+import com.aleks.aleksiev.codewars.utils.RecyclerViewItemsSpaceDecoration
+import javax.inject.Inject
 
-class ChallengesFragment : BaseFragment() {
+class ChallengesFragment : BaseFragment(), UserIdProvider {
 
     private var memberId: Long = 0
 
-    private val challengesViewModel by lazy {
+    @Inject
+    lateinit var completedChallengeAdapter: CompletedChallengeAdapter
+
+    val challengesViewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory)[ChallengesViewModel::class.java]
     }
 
@@ -31,14 +42,10 @@ class ChallengesFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val loginBinding = DataBindingUtil.inflate<FragmentMemberBinding>(inflater, R.layout.fragment_member, container, false)
-        loginBinding.challengesViewModel = challengesViewModel
-        return loginBinding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        challengesViewModel.fetchCompltedChallenges(memberId, 0)
+        val binding = DataBindingUtil.inflate<FragmentChallengesBinding>(inflater, R.layout.fragment_challenges, container, false)
+        binding.challengesViewModel = challengesViewModel
+        initView(binding)
+        return binding.root
     }
 
     override fun onPause() {
@@ -49,6 +56,21 @@ class ChallengesFragment : BaseFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.memberId = this.memberId
+    }
+
+    override fun getUserId(): Long = memberId
+
+    private fun initView(binding: FragmentChallengesBinding) {
+        val topBottomSpace = resources.getDimensionPixelSize(R.dimen.top_margin)
+        val startEndSpace = resources.getDimensionPixelSize(R.dimen.top_margin)
+        val linearLayoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.challengesRecyclerView.layoutManager = linearLayoutManager
+        binding.challengesRecyclerView.adapter = completedChallengeAdapter
+        binding.challengesRecyclerView.addItemDecoration(DividerItemDecoration(this.context, linearLayoutManager.orientation))
+        binding.challengesRecyclerView.addItemDecoration(RecyclerViewItemsSpaceDecoration(startEndSpace, topBottomSpace, startEndSpace, topBottomSpace))
+
+        challengesViewModel.completedChallenges.observe(viewLifecycleOwner, Observer<PagedList<CompletedChallengeModel>> { completedChallengeAdapter.submitList(it) })
+        challengesViewModel.getNetworkState().observe(viewLifecycleOwner, Observer<NetworkState> { completedChallengeAdapter.setNetworkState(it) })
     }
 
     companion object {

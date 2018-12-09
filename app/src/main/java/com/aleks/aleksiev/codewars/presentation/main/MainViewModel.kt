@@ -5,6 +5,6 @@ import com.aleks.aleksiev.codewars.presentation.common.navigator.Navigator
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    val mainState: MainState,
+    val viewState: MainState,
     private val navigator: Navigator
 ) : BaseViewModel(), Navigator by navigator

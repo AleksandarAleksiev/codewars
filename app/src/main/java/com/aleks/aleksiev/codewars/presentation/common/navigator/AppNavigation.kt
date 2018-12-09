@@ -23,6 +23,10 @@ class AppNavigation @Inject constructor(private val mainActivity: MainActivity) 
         mainActivity.showScreen(fragment, ChallengesFragment.TAG, true, true)
     }
 
+    override fun taskInProgress(inProgress: Boolean) {
+        mainActivity.taskInProgress(inProgress)
+    }
+
     private fun clearBackStack() {
 
         // this will clear the back stack and displays no animation on the screen

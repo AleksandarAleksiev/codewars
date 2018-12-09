@@ -1,7 +1,7 @@
 package com.aleks.aleksiev.codewars.domain.repository.challenges
 
 import com.aleks.aleksiev.codewars.domain.rest.UserController
-import com.aleks.aleksiev.codewars.domain.rest.response.ApiEmptyResponse
+import com.aleks.aleksiev.codewars.domain.rest.response.ApiErrorResponse
 import com.aleks.aleksiev.codewars.domain.rest.response.ApiResponse
 import com.aleks.aleksiev.codewars.domain.rest.response.ApiSuccessResponse
 import com.aleks.aleksiev.codewars.domain.rest.response.CompletedChallengesResponse
@@ -38,7 +38,7 @@ class CompletedChallengesRepositoryImpl  @Inject constructor(
     private fun onApiResponse(userId: Long, page: Int, response: ApiResponse<CompletedChallengesResponse>): CompletedChallenge {
         return when (response) {
             is ApiSuccessResponse -> cacheResponse(userId, page, response.body)
-            is ApiEmptyResponse -> throw Exception()
+            is ApiErrorResponse -> throw Exception(response.errorMessage)
             else -> throw Exception()
         }
     }

@@ -6,4 +6,6 @@
     <string name="unknown">Unknown</string>
     <string name="completed_challenges">Completed challenges</string>
     <string name="authored_challenges">Authored challenges</string>
+    <string name="retry">Retry</string>
+    <string name="completed_challenge">Completed challenge: %1$s</string>
 </resources>

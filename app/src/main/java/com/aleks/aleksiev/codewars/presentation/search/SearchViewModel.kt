@@ -18,18 +18,22 @@ class SearchViewModel @Inject constructor(private val navigator: Navigator,
 
     fun findMember(memberName: String?) {
         memberName?.let {
+            taskInProgress(true)
             add(Single.fromCallable { memberSearchUseCase.findMember(it) }
                 .subscribeOn(schedulersFacade.ioScheduler())
                 .observeOn(schedulersFacade.mainThreadScheduler())
                 .subscribe({member ->
                     Log.d("", "")
+                    taskInProgress(false)
                 }, { error ->
                     Log.d("", "")
+                    taskInProgress(false)
                 }))
         }
     }
 
     fun searchHistory(maxSearches: Int) {
+        taskInProgress(true)
         add(memberSearchUseCase.observeMemberSearch(maxSearches)
             .map { members ->
                 members.map { toFoundMember(it) }
@@ -38,8 +42,10 @@ class SearchViewModel @Inject constructor(private val navigator: Navigator,
             .observeOn(schedulersFacade.mainThreadScheduler())
             .subscribe({members ->
                 searchHistoryUpdateListener.searchHistoryUpdated(members)
+                taskInProgress(false)
             }, {error ->
                 Log.d("", "")
+                taskInProgress(false)
             }))
     }
 

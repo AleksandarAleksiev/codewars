@@ -4,4 +4,5 @@ interface Navigator {
 
     fun search()
     fun memberChallenges(memberId: Long)
+    fun taskInProgress(inProgress: Boolean)
 }
