@@ -48,6 +48,7 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$supportVersion"
     implementation "com.android.support:design:$supportVersion"
     implementation "com.android.support:support-v4:$supportVersion"
+    implementation "android.arch.paging:runtime:$pagingVersion"
     kapt "android.arch.lifecycle:compiler:$lifeCycleVersion"
 
     //test dependencies

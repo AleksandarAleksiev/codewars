@@ -36,6 +36,16 @@ class ChallengesFragment : BaseFragment() {
         return loginBinding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        challengesViewModel.fetchCompltedChallenges(memberId, 0)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        challengesViewModel.dispose()
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.memberId = this.memberId

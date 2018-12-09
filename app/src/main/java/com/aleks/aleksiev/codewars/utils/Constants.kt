@@ -3,4 +3,5 @@ package com.aleks.aleksiev.codewars.utils
 object Constants {
 
     const val EMPTY_STRING = ""
+    const val MAX_SEARCHED_ITEMS_TO_SHOW = 5
 }

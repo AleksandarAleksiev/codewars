@@ -29,8 +29,8 @@ class SearchViewModel @Inject constructor(private val navigator: Navigator,
         }
     }
 
-    fun searchHistory() {
-        add(memberSearchUseCase.observeMemberSearch()
+    fun searchHistory(maxSearches: Int) {
+        add(memberSearchUseCase.observeMemberSearch(maxSearches)
             .map { members ->
                 members.map { toFoundMember(it) }
             }

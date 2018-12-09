@@ -6,5 +6,5 @@ import io.reactivex.Flowable
 interface MemberSearchUseCase {
 
     fun findMember(memberName: String): Member
-    fun observeMemberSearch(): Flowable<List<Member>>
+    fun observeMemberSearch(numberOfSearches: Int): Flowable<List<Member>>
 }

@@ -15,6 +15,7 @@ import com.aleks.aleksiev.codewars.databinding.FragmentSearchBinding
 import com.aleks.aleksiev.codewars.presentation.common.BaseFragment
 import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember
 import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMembersAdapter
+import com.aleks.aleksiev.codewars.utils.Constants
 import com.aleks.aleksiev.codewars.utils.ItemClicked
 import com.aleks.aleksiev.codewars.utils.RecyclerViewItemsSpaceDecoration
 import javax.inject.Inject
@@ -44,7 +45,7 @@ class SearchFragment : BaseFragment(),
     override fun onResume() {
         super.onResume()
         viewLifecycleOwner
-        searchViewModel.searchHistory()
+        searchViewModel.searchHistory(Constants.MAX_SEARCHED_ITEMS_TO_SHOW)
     }
 
     override fun onPause() {

@@ -6,7 +6,7 @@ import com.aleks.aleksiev.codewars.model.repository.MemberSearchRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-internal class MemberSearch @Inject constructor(
+internal class MemberSearchUseCaseImpl @Inject constructor(
     private val memberSearchRepository: MemberSearchRepository
 ) : MemberSearchUseCase {
     override fun findMember(memberName: String): Member {
@@ -14,9 +14,9 @@ internal class MemberSearch @Inject constructor(
         return toMember(memberEntity)
     }
 
-    override fun observeMemberSearch(): Flowable<List<Member>> {
+    override fun observeMemberSearch(numberOfSearches: Int): Flowable<List<Member>> {
         return memberSearchRepository
-            .observeMemberSearch()
+            .observeMemberSearch(numberOfSearches)
             .flatMap { list ->
                 val membersList = list.map { toMember(it) }
                 Flowable.fromCallable { membersList }

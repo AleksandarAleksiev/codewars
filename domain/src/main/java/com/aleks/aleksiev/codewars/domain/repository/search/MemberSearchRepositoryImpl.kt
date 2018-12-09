@@ -1,4 +1,4 @@
-package com.aleks.aleksiev.codewars.domain.repository
+package com.aleks.aleksiev.codewars.domain.repository.search
 
 import com.aleks.aleksiev.codewars.domain.rest.UserController
 import com.aleks.aleksiev.codewars.domain.rest.response.ApiEmptyResponse
@@ -18,6 +18,10 @@ internal class MemberSearchRepositoryImpl @Inject constructor(
     private val userController: UserController
 ) : MemberSearchRepository, Repository by repository {
 
+    override fun getMemberUserName(memberId: Long): String {
+        return database.memberSearchDao().getUserName(memberId)
+    }
+
     override fun findMember(memberName: String): MemberSearch {
         val response = userController.findUser(memberName)
         return onApiResponse(response)
@@ -27,7 +31,9 @@ internal class MemberSearchRepositoryImpl @Inject constructor(
         return database.memberSearchDao().insert(memberSearch)
     }
 
-    override fun observeMemberSearch(): Flowable<List<MemberSearch>> = database.memberSearchDao().observeMemberSearch()
+    override fun observeMemberSearch(numberOfSearches: Int): Flowable<List<MemberSearch>>{
+        return database.memberSearchDao().observeMemberSearch(numberOfSearches)
+    }
 
     private fun onApiResponse(response: ApiResponse<MemberSearchResponse>): MemberSearch {
         return when (response) {
