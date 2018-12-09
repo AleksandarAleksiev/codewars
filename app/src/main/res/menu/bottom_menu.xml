@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_completed_challenges"
+        android:enabled="true"
+        android:icon="@drawable/ic_cloud_done_white_24dp"
+        android:title="@string/completed_challenges"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_schedules"
+        android:enabled="true"
+        android:icon="@drawable/ic_account_box_black_24dp"
+        android:title="@string/authored_challenges"
+        app:showAsAction="ifRoom" />
+</menu>

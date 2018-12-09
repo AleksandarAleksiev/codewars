@@ -4,4 +4,6 @@
     <string name="user_name" formatted="true">Name: %1$s</string>
     <string name="user_user_name" formatted="true">User Name: %1$s</string>
     <string name="unknown">Unknown</string>
+    <string name="completed_challenges">Completed challenges</string>
+    <string name="authored_challenges">Authored challenges</string>
 </resources>

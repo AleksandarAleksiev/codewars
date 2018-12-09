@@ -5,6 +5,8 @@ import com.aleks.aleksiev.codewars.di.annotation.ViewModelKey
 import com.aleks.aleksiev.codewars.presentation.search.SearchFragment
 import com.aleks.aleksiev.codewars.presentation.search.SearchHistoryUpdateListener
 import com.aleks.aleksiev.codewars.presentation.search.SearchViewModel
+import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember
+import com.aleks.aleksiev.codewars.utils.ItemClicked
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -19,4 +21,7 @@ abstract class SearchModule {
 
     @Binds
     abstract fun bindsSearchHistoryUpdateListener(searchFragment: SearchFragment): SearchHistoryUpdateListener
+
+    @Binds
+    abstract fun bindsFoundMemberItemClicked(searchFragment: SearchFragment): ItemClicked<FoundMember>
 }

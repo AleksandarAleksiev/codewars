@@ -3,13 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="memberViewModel"
-            type="com.aleks.aleksiev.codewars.presentation.member.MemberViewModel"/>
+            name="challengesViewModel"
+            type="com.aleks.aleksiev.codewars.presentation.challenges.ChallengesViewModel"/>
     </data>
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="24dp">
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.BottomNavigationView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:itemIconTint="@drawable/nav_item_colour_state"
+            app:itemTextColor="@drawable/nav_item_colour_state"
+            app:menu="@menu/bottom_menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

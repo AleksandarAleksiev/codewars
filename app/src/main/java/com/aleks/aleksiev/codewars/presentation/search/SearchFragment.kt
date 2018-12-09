@@ -14,14 +14,18 @@ import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.databinding.FragmentSearchBinding
 import com.aleks.aleksiev.codewars.presentation.common.BaseFragment
 import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember
-import com.aleks.aleksiev.codewars.presentation.search.foundmembers.SearchedItemsAdapter
+import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMembersAdapter
+import com.aleks.aleksiev.codewars.utils.ItemClicked
 import com.aleks.aleksiev.codewars.utils.RecyclerViewItemsSpaceDecoration
 import javax.inject.Inject
 
-class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchHistoryUpdateListener {
+class SearchFragment : BaseFragment(),
+    SearchView.OnQueryTextListener,
+    SearchHistoryUpdateListener,
+    ItemClicked<FoundMember> {
 
     @Inject
-    lateinit var searchedItemsAdapter: SearchedItemsAdapter
+    lateinit var foundMembersAdapter: FoundMembersAdapter
 
     private val searchViewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory)[SearchViewModel::class.java]
@@ -58,7 +62,11 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchHis
     }
 
     override fun searchHistoryUpdated(searchHistory: List<FoundMember>) {
-        searchedItemsAdapter.submitList(searchHistory)
+        foundMembersAdapter.submitList(searchHistory)
+    }
+
+    override fun onItemClicked(item: FoundMember) {
+        searchViewModel.memberChallenges(item.memberId)
     }
 
     private fun initView(searchBinding: FragmentSearchBinding) {
@@ -72,7 +80,7 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchHis
         val startEndSpace = resources.getDimensionPixelSize(R.dimen.top_margin)
         val layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         searchBinding.searchHistoryRecyclerView.layoutManager = layoutManager
-        searchBinding.searchHistoryRecyclerView.adapter = searchedItemsAdapter
+        searchBinding.searchHistoryRecyclerView.adapter = foundMembersAdapter
         searchBinding.searchHistoryRecyclerView.addItemDecoration(DividerItemDecoration(this.context, layoutManager.orientation))
         searchBinding.searchHistoryRecyclerView.addItemDecoration(RecyclerViewItemsSpaceDecoration(startEndSpace, topBottomSpace, startEndSpace, topBottomSpace))
     }
@@ -80,6 +88,7 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchHis
     companion object {
         @JvmStatic
         val TAG: String = SearchFragment::class.java.simpleName
+
         @JvmStatic
         fun newInstance() = SearchFragment()
     }

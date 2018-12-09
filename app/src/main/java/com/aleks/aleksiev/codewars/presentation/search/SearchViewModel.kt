@@ -45,6 +45,7 @@ class SearchViewModel @Inject constructor(private val navigator: Navigator,
 
     private fun toFoundMember(member: Member): FoundMember {
         return FoundMember(
+            memberId = member.id,
             userName = member.memberUserName,
             name = member.memberName,
             rank = 0,
