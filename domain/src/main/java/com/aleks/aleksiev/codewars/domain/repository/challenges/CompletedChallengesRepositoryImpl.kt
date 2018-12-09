@@ -18,11 +18,15 @@ class CompletedChallengesRepositoryImpl  @Inject constructor(
     private val repository: Repository,
     private val database: CodewarsDatabase,
     private val userController: UserController
-) : CompletedChallengesRepository {
+) : CompletedChallengesRepository, Repository by repository {
 
     override fun fetchCompletedChallenges(userId: Long, userName: String, page: Int): CompletedChallenge {
-        val response = userController.fetchUserCompletedChallenges(userId = userName, pageId = page)
-        return onApiResponse(userId, page, response)
+        var result = fetchFromDB(userId, page)
+        if(result == null) {
+            result = fetchNetwork(userId, userName, page)
+        }
+
+        return result
     }
 
     override fun saveCompletedChallenges(completedChallenge: CompletedChallenge): Long {
@@ -33,6 +37,15 @@ class CompletedChallengesRepositoryImpl  @Inject constructor(
         val completedChallenge = toCompletedChallenge(userId, page, responseBody)
         completedChallenge.id = saveCompletedChallenges(completedChallenge)
         return completedChallenge
+    }
+
+    private fun fetchFromDB(userId: Long, page: Int): CompletedChallenge? {
+        return database.completedChallengeDao().loadUserCompletedChalenges(userId, page)
+    }
+
+    private fun fetchNetwork(userId: Long, userName: String, page: Int): CompletedChallenge {
+        val response = userController.fetchUserCompletedChallenges(userId = userName, pageId = page)
+        return onApiResponse(userId, page, response)
     }
 
     private fun onApiResponse(userId: Long, page: Int, response: ApiResponse<CompletedChallengesResponse>): CompletedChallenge {
