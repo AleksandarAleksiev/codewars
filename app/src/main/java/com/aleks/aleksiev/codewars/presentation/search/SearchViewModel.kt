@@ -44,13 +44,9 @@ class SearchViewModel @Inject constructor(private val navigator: Navigator,
     }
 
     private fun toFoundMember(member: Member): FoundMember {
-        val memberName = if (member.memberName.isBlank()) {
-            member.memberUserName
-        } else {
-            member.memberName
-        }
         return FoundMember(
-            name = memberName,
+            userName = member.memberUserName,
+            name = member.memberName,
             rank = 0,
             bestLanguage = ""
         )

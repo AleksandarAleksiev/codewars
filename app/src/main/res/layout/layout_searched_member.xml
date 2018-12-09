@@ -2,6 +2,7 @@
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.text.TextUtils"/>
         <variable
             name="member"
             type="com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember"/>
@@ -17,8 +18,22 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:textStyle="bold"
-            android:text="@{member.name}"
+            android:text="@{TextUtils.isEmpty(member.name) ? String.format(@string/user_name, @string/unknown) : String.format(@string/user_name, member.name)}"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="H,1:0.1"
+            tools:text="@tools:sample/full_names"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/userNameTextView"
+            style="@style/textViewStyleAutoSizeMedium"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:textStyle="bold"
+            android:text="@{TextUtils.isEmpty(member.userName) ? String.format(@string/user_name, @string/unknown) : String.format(@string/user_user_name, member.userName)}"
+            android:layout_marginTop="@dimen/top_margin"
+            app:layout_constraintTop_toBottomOf="@+id/nameTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="H,1:0.1"
@@ -31,7 +46,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/top_margin"
-            app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+            app:layout_constraintTop_toBottomOf="@+id/userNameTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="H,1:0.1"

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Codewars</string>
     <string name="user_rank" formatted="true">Rank: %1$d</string>
+    <string name="user_name" formatted="true">Name: %1$s</string>
+    <string name="user_user_name" formatted="true">User Name: %1$s</string>
+    <string name="unknown">Unknown</string>
 </resources>
