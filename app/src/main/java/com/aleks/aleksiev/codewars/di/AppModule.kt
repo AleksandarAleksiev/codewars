@@ -7,19 +7,24 @@ import com.aleks.aleksiev.codewars.di.annotation.AppContext
 import com.aleks.aleksiev.codewars.presentation.viewmodel.ViewModelFactory
 import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacade
 import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacadeImpl
-import dagger.Binds
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
+import dagger.Provides
 
 @Module
-abstract class AppModule {
+class AppModule {
 
-    @Binds
-    abstract fun providesViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
+    @Provides
+    fun providesViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory = viewModelFactory
 
-    @Binds
+    @Provides
     @AppContext
-    abstract fun providesAppContext(codewarsApp: CodewarsApp): Context
+    fun providesAppContext(codewarsApp: CodewarsApp): Context = codewarsApp
 
-    @Binds
-    abstract fun schedulerFacade(schedulersFacadeImpl: SchedulersFacadeImpl): SchedulersFacade
+    @Provides
+    fun schedulerFacade(schedulersFacadeImpl: SchedulersFacadeImpl): SchedulersFacade = schedulersFacadeImpl
+
+    @Provides
+    fun providesGson(): Gson = GsonBuilder().create()
 }

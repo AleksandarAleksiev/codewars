@@ -1,9 +1,12 @@
-package com.aleks.aleksiev.codewars.domain.di
+package com.aleks.aleksiev.codewars.di
 
 import android.content.Context
 import android.util.Log
+import com.aleks.aleksiev.codewars.BuildConfig
+import com.aleks.aleksiev.codewars.di.annotation.AppContext
 import com.aleks.aleksiev.codewars.domain.rest.UserController
-import com.google.gson.GsonBuilder
+import com.aleks.aleksiev.codewars.domain.rest.response.ApiResponseCallAdapterFactory
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -12,26 +15,29 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+import javax.inject.Singleton
 
 @Module
-class NetworkModule(private val context: Context, private val apiEndppoint: String) {
+class NetworkModule {
 
-    private val cache by lazy {
+    @Provides
+    fun providesCache(@AppContext context: Context): Cache {
         val cacheFile = File(context.cacheDir, "httpCache")
-        Cache(cacheFile, 10 * 1024 * 1024)
+        return Cache(cacheFile, 10 * 1024 * 1024)
     }
 
-    private val loggingInterceptor by lazy {
+    @Provides
+    fun providesLoggingInterceptor(): HttpLoggingInterceptor {
         val interceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { message -> Log.d("NetworkModule", message) })
         interceptor.level = HttpLoggingInterceptor.Level.BODY
-        interceptor
+        return interceptor
     }
 
-    private val gson by lazy {
-        GsonBuilder().create()
-    }
-
-    private val retrofit by lazy {
+    @Provides
+    @Singleton
+    fun providesRetrofit(gson: Gson,
+                         cache: Cache,
+                         loggingInterceptor: HttpLoggingInterceptor): Retrofit {
 
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
@@ -51,13 +57,14 @@ class NetworkModule(private val context: Context, private val apiEndppoint: Stri
             .cache(cache)
             .build()
 
-        Retrofit.Builder()
-            .baseUrl(apiEndppoint)
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.apiEndppoint)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(ApiResponseCallAdapterFactory())
             .build()
     }
 
     @Provides
-    fun providesUserController(): UserController = retrofit.create(UserController::class.java)
+    fun providesUserController(retrofit: Retrofit): UserController = retrofit.create(UserController::class.java)
 }

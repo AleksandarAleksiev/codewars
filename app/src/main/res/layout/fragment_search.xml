@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -10,8 +11,30 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:queryHint="@string/app_name"
+            app:iconifiedByDefault="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/searchHistoryRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/top_margin"
+            app:layout_constraintTop_toBottomOf="@+id/searchView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/layout_searched_member"
+            tools:layoutManager="LinearLayoutManager"
+            tools:orientation="vertical"/>
 
     </android.support.constraint.ConstraintLayout>
 
