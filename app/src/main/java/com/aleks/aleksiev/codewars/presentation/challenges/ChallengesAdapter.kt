@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.databinding.LayoutCompletedChallengeBinding
 import com.aleks.aleksiev.codewars.databinding.LayoutNetworkStateBinding
-import com.aleks.aleksiev.codewars.presentation.challenges.model.CompletedChallengeModel
+import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel
 import com.aleks.aleksiev.codewars.presentation.challenges.model.NetworkStateModel
 import com.aleks.aleksiev.codewars.presentation.diffutils.DiffUtilsCallback
 import com.aleks.aleksiev.codewars.utils.NetworkState
 import javax.inject.Inject
 
-class CompletedChallengeAdapter @Inject constructor() : PagedListAdapter<CompletedChallengeModel, RecyclerView.ViewHolder>(DiffUtilsCallback<CompletedChallengeModel>()) {
+class ChallengesAdapter @Inject constructor() : PagedListAdapter<ChallengeModel, RecyclerView.ViewHolder>(DiffUtilsCallback<ChallengeModel>()) {
 
     private var networkState: NetworkState? = null
 
@@ -22,7 +22,7 @@ class CompletedChallengeAdapter @Inject constructor() : PagedListAdapter<Complet
         return when (viewType) {
             R.layout.layout_completed_challenge -> {
                 val binding = LayoutCompletedChallengeBinding.inflate(inflater, parent, false)
-                CompletedChallengeViewHolder(binding)
+                ChallengeViewHolder(binding)
             }
             R.layout.layout_network_state -> {
                 val binding = LayoutNetworkStateBinding.inflate(inflater, parent, false)
@@ -34,7 +34,7 @@ class CompletedChallengeAdapter @Inject constructor() : PagedListAdapter<Complet
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            R.layout.layout_completed_challenge -> (holder as CompletedChallengeViewHolder).bind(getItem(position))
+            R.layout.layout_completed_challenge -> (holder as ChallengeViewHolder).bind(getItem(position))
             R.layout.layout_network_state -> (holder as NetworkStateViewHolder).bind(NetworkStateModel(networkState))
         }
     }

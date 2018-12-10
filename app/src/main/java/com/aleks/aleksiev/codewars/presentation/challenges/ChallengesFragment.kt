@@ -12,7 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.databinding.FragmentChallengesBinding
-import com.aleks.aleksiev.codewars.presentation.challenges.model.CompletedChallengeModel
+import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel
 import com.aleks.aleksiev.codewars.presentation.common.BaseFragment
 import com.aleks.aleksiev.codewars.utils.BundleDelegate
 import com.aleks.aleksiev.codewars.utils.NetworkState
@@ -24,7 +24,7 @@ class ChallengesFragment : BaseFragment(), UserIdProvider {
     private var memberId: Long = 0
 
     @Inject
-    lateinit var completedChallengeAdapter: CompletedChallengeAdapter
+    lateinit var challengesAdapter: ChallengesAdapter
 
     val challengesViewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory)[ChallengesViewModel::class.java]
@@ -65,12 +65,12 @@ class ChallengesFragment : BaseFragment(), UserIdProvider {
         val startEndSpace = resources.getDimensionPixelSize(R.dimen.top_margin)
         val linearLayoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.challengesRecyclerView.layoutManager = linearLayoutManager
-        binding.challengesRecyclerView.adapter = completedChallengeAdapter
+        binding.challengesRecyclerView.adapter = challengesAdapter
         binding.challengesRecyclerView.addItemDecoration(DividerItemDecoration(this.context, linearLayoutManager.orientation))
         binding.challengesRecyclerView.addItemDecoration(RecyclerViewItemsSpaceDecoration(startEndSpace, topBottomSpace, startEndSpace, topBottomSpace))
 
-        challengesViewModel.completedChallenges.observe(viewLifecycleOwner, Observer<PagedList<CompletedChallengeModel>> { completedChallengeAdapter.submitList(it) })
-        challengesViewModel.getNetworkState().observe(viewLifecycleOwner, Observer<NetworkState> { completedChallengeAdapter.setNetworkState(it) })
+        challengesViewModel.challenges.observe(viewLifecycleOwner, Observer<PagedList<ChallengeModel>> { challengesAdapter.submitList(it) })
+        challengesViewModel.getNetworkState().observe(viewLifecycleOwner, Observer<NetworkState> { challengesAdapter.setNetworkState(it) })
     }
 
     companion object {

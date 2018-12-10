@@ -7,12 +7,12 @@ import com.aleks.aleksiev.codewars.domain.rest.response.ApiSuccessResponse
 import com.aleks.aleksiev.codewars.domain.rest.response.CompletedChallengesResponse
 import com.aleks.aleksiev.codewars.model.CodewarsDatabase
 import com.aleks.aleksiev.codewars.model.entities.CompletedChallenge
-import com.aleks.aleksiev.codewars.model.entities.model.Challenges
+import com.aleks.aleksiev.codewars.model.entities.model.CompletedChallenges
 import com.aleks.aleksiev.codewars.model.repository.CompletedChallengesRepository
 import com.aleks.aleksiev.codewars.model.repository.Repository
 import javax.inject.Inject
 import com.aleks.aleksiev.codewars.domain.rest.model.Challenge as ChallengeResponse
-import com.aleks.aleksiev.codewars.model.entities.model.Challenge as ChallengeEntity
+import com.aleks.aleksiev.codewars.model.entities.model.CompletedChallenge as ChallengeEntity
 
 class CompletedChallengesRepositoryImpl  @Inject constructor(
     private val repository: Repository,
@@ -63,7 +63,7 @@ class CompletedChallengesRepositoryImpl  @Inject constructor(
             page = page,
             totalPages = completedChallengesResponse.totalPages,
             totalItems = completedChallengesResponse.totalItems,
-            challenges = Challenges(challenges = challenges)
+            challenges = CompletedChallenges(completedChallenges = challenges)
         )
     }
 

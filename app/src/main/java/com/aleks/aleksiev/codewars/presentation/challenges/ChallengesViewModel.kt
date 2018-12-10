@@ -8,7 +8,7 @@ import com.aleks.aleksiev.codewars.domain.datamodel.CompletedChallenge
 import com.aleks.aleksiev.codewars.domain.usecase.CompletedChallengesUseCase
 import com.aleks.aleksiev.codewars.presentation.challenges.datasource.CompleteChallengesDataSource
 import com.aleks.aleksiev.codewars.presentation.challenges.datasource.CompleteChallengesDataSourceFactory
-import com.aleks.aleksiev.codewars.presentation.challenges.model.CompletedChallengeModel
+import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel
 import com.aleks.aleksiev.codewars.presentation.common.BaseViewModel
 import com.aleks.aleksiev.codewars.presentation.common.navigator.Navigator
 import com.aleks.aleksiev.codewars.utils.Constants
@@ -24,7 +24,7 @@ class ChallengesViewModel @Inject constructor(
     private val navigator: Navigator
 ) : BaseViewModel(), Navigator by navigator {
 
-    var completedChallenges: LiveData<PagedList<CompletedChallengeModel>>
+    var challenges: LiveData<PagedList<ChallengeModel>>
 
     private val sourceFactory: CompleteChallengesDataSourceFactory by lazy {
         CompleteChallengesDataSourceFactory(schedulersFacade, this)
@@ -35,11 +35,11 @@ class ChallengesViewModel @Inject constructor(
             .setPageSize(Constants.PAGE_SIZE)
             .setEnablePlaceholders(false)
             .build()
-        completedChallenges = LivePagedListBuilder<Int, CompletedChallengeModel>(sourceFactory, config).build()
+        challenges = LivePagedListBuilder<Int, ChallengeModel>(sourceFactory, config).build()
 
     }
 
-    fun fetchCompletedChallenges(page: Int): Single<List<CompletedChallengeModel>> {
+    fun fetchCompletedChallenges(page: Int): Single<List<ChallengeModel>> {
         return Single.fromCallable {
             completedChallengesUseCase.fetchCompletedChallenges(userIdProvider.getUserId(), page)
                 .map { toCompletedChallengeModel(it) }
@@ -49,8 +49,8 @@ class ChallengesViewModel @Inject constructor(
     fun getNetworkState(): LiveData<NetworkState> = Transformations.switchMap<CompleteChallengesDataSource, NetworkState>(
         sourceFactory.completeChallengesDataSourceLiveData) { it.networkState }
 
-    private fun toCompletedChallengeModel(completeChallenge: CompletedChallenge): CompletedChallengeModel {
-        return CompletedChallengeModel(
+    private fun toCompletedChallengeModel(completeChallenge: CompletedChallenge): ChallengeModel {
+        return ChallengeModel(
             challengeId = completeChallenge.challengeId,
             challengeName = completeChallenge.challengeName,
             challengeCompletedAt = completeChallenge.challengeCompletedAt

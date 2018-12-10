@@ -3,7 +3,7 @@ package com.aleks.aleksiev.codewars.presentation.challenges.datasource
 import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.PageKeyedDataSource
 import com.aleks.aleksiev.codewars.presentation.challenges.ChallengesViewModel
-import com.aleks.aleksiev.codewars.presentation.challenges.model.CompletedChallengeModel
+import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel
 import com.aleks.aleksiev.codewars.utils.Constants
 import com.aleks.aleksiev.codewars.utils.NetworkState
 import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacade
@@ -11,11 +11,11 @@ import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacade
 class CompleteChallengesDataSource (
     private val schedulersFacade: SchedulersFacade,
     private val challengesViewModel: ChallengesViewModel
-) : PageKeyedDataSource<Int, CompletedChallengeModel>() {
+) : PageKeyedDataSource<Int, ChallengeModel>() {
 
     val networkState = MutableLiveData<NetworkState>()
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, CompletedChallengeModel>) {
+    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, ChallengeModel>) {
 
         networkState.postValue(NetworkState.NetworkStateLoading)
         challengesViewModel.taskInProgress(true)
@@ -35,7 +35,7 @@ class CompleteChallengesDataSource (
         )
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, CompletedChallengeModel>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, ChallengeModel>) {
         networkState.postValue(NetworkState.NetworkStateLoading)
 
         challengesViewModel.add(challengesViewModel.fetchCompletedChallenges(params.key)
@@ -50,7 +50,7 @@ class CompleteChallengesDataSource (
         )
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, CompletedChallengeModel>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, ChallengeModel>) {
 
     }
 }

@@ -6,7 +6,7 @@
         <import type="android.text.TextUtils"/>
         <variable
             name="challenge"
-            type="com.aleks.aleksiev.codewars.presentation.challenges.model.CompletedChallengeModel"/>
+            type="com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel"/>
     </data>
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

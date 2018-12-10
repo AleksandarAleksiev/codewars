@@ -12,6 +12,6 @@ interface UserController {
     @GET("users/{userId}")
     fun findUser(@Path("userId") userId: String): ApiResponse<MemberSearchResponse>
 
-    @GET("users/{userId}/code-challenges/completed")
+    @GET("users/{userId}/code-completedChallenges/completed")
     fun fetchUserCompletedChallenges(@Path("userId") userId: String, @Query("page") pageId: Int): ApiResponse<CompletedChallengesResponse>
 }

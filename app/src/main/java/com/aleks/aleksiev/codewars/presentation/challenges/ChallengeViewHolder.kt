@@ -1,14 +1,14 @@
 package com.aleks.aleksiev.codewars.presentation.challenges
 
 import com.aleks.aleksiev.codewars.databinding.LayoutCompletedChallengeBinding
-import com.aleks.aleksiev.codewars.presentation.challenges.model.CompletedChallengeModel
+import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel
 import com.aleks.aleksiev.codewars.presentation.common.BaseViewHolder
 
-class CompletedChallengeViewHolder(
+class ChallengeViewHolder(
     layoutCompletedChallengeBinding: LayoutCompletedChallengeBinding
-) : BaseViewHolder<CompletedChallengeModel, LayoutCompletedChallengeBinding>(layoutCompletedChallengeBinding) {
+) : BaseViewHolder<ChallengeModel, LayoutCompletedChallengeBinding>(layoutCompletedChallengeBinding) {
 
-    override fun bind(item: CompletedChallengeModel?) {
+    override fun bind(item: ChallengeModel?) {
         binding.challenge = item
         binding.executePendingBindings()
     }
