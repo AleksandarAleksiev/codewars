@@ -12,7 +12,7 @@ data class AuthoredChallenge(
     @SerializedName("rank")
     val challengeRank: Int,
     @SerializedName("rankName")
-    val challengeRankName: String,
+    val challengeRankName: String?,
     @SerializedName("tags")
     val challengeTags: List<String>,
     @SerializedName("languages")

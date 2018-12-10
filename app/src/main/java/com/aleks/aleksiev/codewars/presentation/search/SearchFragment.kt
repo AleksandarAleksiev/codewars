@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.databinding.FragmentSearchBinding
 import com.aleks.aleksiev.codewars.presentation.common.BaseFragment
+import com.aleks.aleksiev.codewars.presentation.hideKeyboard
 import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember
 import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMembersAdapter
 import com.aleks.aleksiev.codewars.utils.Constants
@@ -54,6 +55,7 @@ class SearchFragment : BaseFragment(),
     }
 
     override fun onQueryTextSubmit(queryText: String?): Boolean {
+        parentActivity?.hideKeyboard()
         searchViewModel.findMember(queryText)
         return true
     }

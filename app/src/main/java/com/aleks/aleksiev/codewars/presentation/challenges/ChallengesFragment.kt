@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.PagedList
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -36,6 +37,7 @@ class ChallengesFragment : BaseFragment(), UserIdProvider {
         val bundle = savedInstanceState ?: arguments
         bundle?.let {
             this.memberId = it.memberId
+            this.challengesViewModel.selectedItem = it.selectedMenuId
         }
     }
 
@@ -56,6 +58,7 @@ class ChallengesFragment : BaseFragment(), UserIdProvider {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.memberId = this.memberId
+        outState.selectedMenuId = this.challengesViewModel.selectedItem
     }
 
     override fun getUserId(): Long = memberId
@@ -69,8 +72,24 @@ class ChallengesFragment : BaseFragment(), UserIdProvider {
         binding.challengesRecyclerView.addItemDecoration(DividerItemDecoration(this.context, linearLayoutManager.orientation))
         binding.challengesRecyclerView.addItemDecoration(RecyclerViewItemsSpaceDecoration(startEndSpace, topBottomSpace, startEndSpace, topBottomSpace))
 
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener {
+            challengesAdapter.setNetworkState(null)
+            challengesViewModel.selectedItem = it.itemId
+            challengesViewModel.invalidate()
+            true
+        }
+
+        selectChallenge(binding.bottomNavigationView)
+
         challengesViewModel.challenges.observe(viewLifecycleOwner, Observer<PagedList<ChallengeModel>> { challengesAdapter.submitList(it) })
         challengesViewModel.getNetworkState().observe(viewLifecycleOwner, Observer<NetworkState> { challengesAdapter.setNetworkState(it) })
+    }
+
+    private fun selectChallenge(bottomNavigationView: BottomNavigationView) {
+        when (this.challengesViewModel.selectedItem) {
+            R.id.action_authored_challenges -> bottomNavigationView.selectedItemId = R.id.action_authored_challenges
+            else -> bottomNavigationView.selectedItemId = R.id.action_completed_challenges
+        }
     }
 
     companion object {
@@ -78,6 +97,7 @@ class ChallengesFragment : BaseFragment(), UserIdProvider {
         val TAG: String = ChallengesFragment::class.java.simpleName
 
         private var Bundle.memberId by BundleDelegate.BundleLong("$TAG.memberChallenges.id")
+        private var Bundle.selectedMenuId by BundleDelegate.BundleInt("$TAG.memberChallenges.selected.item.id")
 
         @JvmStatic
         fun newInstance(memberId: Long) = ChallengesFragment().apply {

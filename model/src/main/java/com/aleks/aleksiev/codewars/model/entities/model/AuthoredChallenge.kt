@@ -5,7 +5,7 @@ data class AuthoredChallenge(
     val challengeName: String,
     val challengeDescription: String,
     val challengeRank: Int,
-    val challengeRankName: String,
+    val challengeRankName: String?,
     val tags: List<String>,
     val languages: List<String>
 )
