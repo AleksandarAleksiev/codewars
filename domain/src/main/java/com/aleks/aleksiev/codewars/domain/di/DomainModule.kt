@@ -1,12 +1,14 @@
 package com.aleks.aleksiev.codewars.domain.di
 
 import com.aleks.aleksiev.codewars.domain.repository.RepositoryImpl
+import com.aleks.aleksiev.codewars.domain.repository.challenges.AuthoredChallengesRepositoryImpl
 import com.aleks.aleksiev.codewars.domain.repository.challenges.CompletedChallengesRepositoryImpl
 import com.aleks.aleksiev.codewars.domain.repository.search.MemberSearchRepositoryImpl
 import com.aleks.aleksiev.codewars.domain.usecase.CompletedChallengesUseCase
 import com.aleks.aleksiev.codewars.domain.usecase.CompletedChallengesUseCaseImpl
 import com.aleks.aleksiev.codewars.domain.usecase.search.MemberSearchUseCase
 import com.aleks.aleksiev.codewars.domain.usecase.search.MemberSearchUseCaseImpl
+import com.aleks.aleksiev.codewars.model.repository.AuthoredChallengesRepository
 import com.aleks.aleksiev.codewars.model.repository.CompletedChallengesRepository
 import com.aleks.aleksiev.codewars.model.repository.MemberSearchRepository
 import com.aleks.aleksiev.codewars.model.repository.Repository
@@ -30,4 +32,7 @@ abstract class DomainModule {
 
     @Binds
     internal abstract fun bindsCompletedChallengesRepository(completedChallengesRepositoryImpl: CompletedChallengesRepositoryImpl): CompletedChallengesRepository
+
+    @Binds
+    internal abstract fun bindsAuthoredChallengesRepository(authoredChallengesRepositoryImpl: AuthoredChallengesRepositoryImpl): AuthoredChallengesRepository
 }

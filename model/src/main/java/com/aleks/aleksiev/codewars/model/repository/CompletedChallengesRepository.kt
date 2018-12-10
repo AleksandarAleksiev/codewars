@@ -1,9 +1,9 @@
 package com.aleks.aleksiev.codewars.model.repository
 
-import com.aleks.aleksiev.codewars.model.entities.CompletedChallenge
+import com.aleks.aleksiev.codewars.model.entities.CompletedChallengeEntity
 
 interface CompletedChallengesRepository : Repository {
 
-    fun saveCompletedChallenges(completedChallenge: CompletedChallenge): Long
-    fun fetchCompletedChallenges(userId: Long, userName: String, page: Int): CompletedChallenge
+    fun saveCompletedChallenges(completedChallenge: CompletedChallengeEntity): Long
+    fun fetchCompletedChallenges(userId: Long, userName: String, page: Int): CompletedChallengeEntity
 }

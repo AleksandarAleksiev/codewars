@@ -6,7 +6,7 @@ import com.aleks.aleksiev.codewars.domain.rest.response.ApiResponse
 import com.aleks.aleksiev.codewars.domain.rest.response.ApiSuccessResponse
 import com.aleks.aleksiev.codewars.domain.rest.response.CompletedChallengesResponse
 import com.aleks.aleksiev.codewars.model.CodewarsDatabase
-import com.aleks.aleksiev.codewars.model.entities.CompletedChallenge
+import com.aleks.aleksiev.codewars.model.entities.CompletedChallengeEntity
 import com.aleks.aleksiev.codewars.model.entities.model.CompletedChallenges
 import com.aleks.aleksiev.codewars.model.repository.CompletedChallengesRepository
 import com.aleks.aleksiev.codewars.model.repository.Repository
@@ -20,7 +20,7 @@ class CompletedChallengesRepositoryImpl  @Inject constructor(
     private val userController: UserController
 ) : CompletedChallengesRepository, Repository by repository {
 
-    override fun fetchCompletedChallenges(userId: Long, userName: String, page: Int): CompletedChallenge {
+    override fun fetchCompletedChallenges(userId: Long, userName: String, page: Int): CompletedChallengeEntity {
         var result = fetchFromDB(userId, page)
         if(result == null) {
             result = fetchNetwork(userId, userName, page)
@@ -29,26 +29,26 @@ class CompletedChallengesRepositoryImpl  @Inject constructor(
         return result
     }
 
-    override fun saveCompletedChallenges(completedChallenge: CompletedChallenge): Long {
+    override fun saveCompletedChallenges(completedChallenge: CompletedChallengeEntity): Long {
         return database.completedChallengeDao().insert(completedChallenge)
     }
 
-    private fun cacheResponse(userId: Long, page: Int, responseBody: CompletedChallengesResponse): CompletedChallenge {
+    private fun cacheResponse(userId: Long, page: Int, responseBody: CompletedChallengesResponse): CompletedChallengeEntity {
         val completedChallenge = toCompletedChallenge(userId, page, responseBody)
         completedChallenge.id = saveCompletedChallenges(completedChallenge)
         return completedChallenge
     }
 
-    private fun fetchFromDB(userId: Long, page: Int): CompletedChallenge? {
+    private fun fetchFromDB(userId: Long, page: Int): CompletedChallengeEntity? {
         return database.completedChallengeDao().loadUserCompletedChalenges(userId, page)
     }
 
-    private fun fetchNetwork(userId: Long, userName: String, page: Int): CompletedChallenge {
+    private fun fetchNetwork(userId: Long, userName: String, page: Int): CompletedChallengeEntity {
         val response = userController.fetchUserCompletedChallenges(userId = userName, pageId = page)
         return onApiResponse(userId, page, response)
     }
 
-    private fun onApiResponse(userId: Long, page: Int, response: ApiResponse<CompletedChallengesResponse>): CompletedChallenge {
+    private fun onApiResponse(userId: Long, page: Int, response: ApiResponse<CompletedChallengesResponse>): CompletedChallengeEntity {
         return when (response) {
             is ApiSuccessResponse -> cacheResponse(userId, page, response.body)
             is ApiErrorResponse -> throw Exception(response.errorMessage)
@@ -56,9 +56,9 @@ class CompletedChallengesRepositoryImpl  @Inject constructor(
         }
     }
 
-    private fun toCompletedChallenge(userId: Long, page: Int, completedChallengesResponse: CompletedChallengesResponse): CompletedChallenge {
+    private fun toCompletedChallenge(userId: Long, page: Int, completedChallengesResponse: CompletedChallengesResponse): CompletedChallengeEntity {
         val challenges = completedChallengesResponse.challenges.map { toChallengeEntity(it) }
-        return CompletedChallenge(
+        return CompletedChallengeEntity(
             userId = userId,
             page = page,
             totalPages = completedChallengesResponse.totalPages,

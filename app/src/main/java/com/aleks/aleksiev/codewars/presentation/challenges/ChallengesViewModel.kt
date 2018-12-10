@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Transformations
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
-import com.aleks.aleksiev.codewars.domain.datamodel.CompletedChallenge
+import com.aleks.aleksiev.codewars.domain.datamodel.ChallengeDomainModel
 import com.aleks.aleksiev.codewars.domain.usecase.CompletedChallengesUseCase
 import com.aleks.aleksiev.codewars.presentation.challenges.datasource.CompleteChallengesDataSource
 import com.aleks.aleksiev.codewars.presentation.challenges.datasource.CompleteChallengesDataSourceFactory
@@ -49,7 +49,7 @@ class ChallengesViewModel @Inject constructor(
     fun getNetworkState(): LiveData<NetworkState> = Transformations.switchMap<CompleteChallengesDataSource, NetworkState>(
         sourceFactory.completeChallengesDataSourceLiveData) { it.networkState }
 
-    private fun toCompletedChallengeModel(completeChallenge: CompletedChallenge): ChallengeModel {
+    private fun toCompletedChallengeModel(completeChallenge: ChallengeDomainModel): ChallengeModel {
         return ChallengeModel(
             challengeId = completeChallenge.challengeId,
             challengeName = completeChallenge.challengeName,

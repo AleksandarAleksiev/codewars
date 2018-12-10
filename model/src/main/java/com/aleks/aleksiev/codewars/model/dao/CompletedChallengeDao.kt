@@ -6,19 +6,19 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.Update
-import com.aleks.aleksiev.codewars.model.entities.CompletedChallenge
+import com.aleks.aleksiev.codewars.model.entities.CompletedChallengeEntity
 
 @Dao
 interface CompletedChallengeDao {
     @Insert(onConflict = OnConflictStrategy.FAIL)
-    fun insert(completedChallenge: CompletedChallenge): Long
+    fun insert(completedChallenge: CompletedChallengeEntity): Long
 
     @Update(onConflict = OnConflictStrategy.FAIL)
-    fun update(completedChallenge: CompletedChallenge)
+    fun update(completedChallenge: CompletedChallengeEntity)
 
     @Delete
-    fun delete(completedChallenge: CompletedChallenge)
+    fun delete(completedChallenge: CompletedChallengeEntity)
 
     @Query("select * from completed_challenge where user_id = :userId and page = :page")
-    fun loadUserCompletedChalenges(userId: Long, page: Int): CompletedChallenge?
+    fun loadUserCompletedChalenges(userId: Long, page: Int): CompletedChallengeEntity?
 }
