@@ -19,6 +19,9 @@ interface CompletedChallengeDao {
     @Delete
     fun delete(completedChallenge: CompletedChallengeEntity)
 
+    @Query("select * from completed_challenge where id = :challengesId")
+    fun getCompletedChallengesGroup(challengesId: Long): CompletedChallengeEntity?
+
     @Query("select * from completed_challenge where user_id = :userId and page = :page")
-    fun loadUserCompletedChalenges(userId: Long, page: Int): CompletedChallengeEntity?
+    fun loadUserCompletedChallenges(userId: Long, page: Int): CompletedChallengeEntity?
 }

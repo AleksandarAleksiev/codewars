@@ -6,4 +6,5 @@ interface AuthoredChallengesRepository : Repository {
 
     fun saveAuthoredChallenges(authoredChallenge: AuthoredChallengeEntity): Long
     fun fetchAuthoredChallenges(userId: Long, userName: String): AuthoredChallengeEntity
+    fun getAuthoredChallenges(challengesGroupId: Long): AuthoredChallengeEntity?
 }

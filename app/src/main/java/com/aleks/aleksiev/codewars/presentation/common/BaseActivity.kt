@@ -43,7 +43,7 @@ abstract class BaseActivity : AppCompatActivity() {
             ft.addToBackStack(contentTag + System.identityHashCode(content).toString())
         }
 
-        ft.commitAllowingStateLoss()
+        ft.commit()
     }
     // endregion
 }

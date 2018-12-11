@@ -49,6 +49,7 @@ dependencies {
     implementation "com.android.support:design:$supportVersion"
     implementation "com.android.support:support-v4:$supportVersion"
     implementation "android.arch.paging:runtime:$pagingVersion"
+    implementation 'com.android.support:support-v4:28.0.0'
     kapt "android.arch.lifecycle:compiler:$lifeCycleVersion"
 
     //test dependencies

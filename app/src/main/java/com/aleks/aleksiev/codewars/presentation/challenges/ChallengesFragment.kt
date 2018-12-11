@@ -14,13 +14,15 @@ import android.view.ViewGroup
 import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.databinding.FragmentChallengesBinding
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel
+import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
 import com.aleks.aleksiev.codewars.presentation.common.BaseFragment
 import com.aleks.aleksiev.codewars.utils.BundleDelegate
+import com.aleks.aleksiev.codewars.utils.ItemClicked
 import com.aleks.aleksiev.codewars.utils.NetworkState
 import com.aleks.aleksiev.codewars.utils.RecyclerViewItemsSpaceDecoration
 import javax.inject.Inject
 
-class ChallengesFragment : BaseFragment(), UserIdProvider {
+class ChallengesFragment : BaseFragment(), UserIdProvider, ItemClicked<ChallengeModel?> {
 
     private var memberId: Long = 0
 
@@ -39,6 +41,8 @@ class ChallengesFragment : BaseFragment(), UserIdProvider {
             this.memberId = it.memberId
             this.challengesViewModel.selectedItem = it.selectedMenuId
         }
+
+        challengesAdapter.itemClickedHandler = this
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -63,6 +67,12 @@ class ChallengesFragment : BaseFragment(), UserIdProvider {
 
     override fun getUserId(): Long = memberId
 
+    override fun onItemClicked(item: ChallengeModel?) {
+        item?.let {
+            challengesViewModel.challengeDetails(it.challengesGroupId, it.challengeId, challengesViewModel.challengeType)
+        }
+    }
+
     private fun initView(binding: FragmentChallengesBinding) {
         val topBottomSpace = resources.getDimensionPixelSize(R.dimen.top_margin)
         val startEndSpace = resources.getDimensionPixelSize(R.dimen.top_margin)
@@ -73,9 +83,7 @@ class ChallengesFragment : BaseFragment(), UserIdProvider {
         binding.challengesRecyclerView.addItemDecoration(RecyclerViewItemsSpaceDecoration(startEndSpace, topBottomSpace, startEndSpace, topBottomSpace))
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {
-            challengesAdapter.setNetworkState(null)
-            challengesViewModel.selectedItem = it.itemId
-            challengesViewModel.invalidate()
+            challengesViewModel.invalidate(it.itemId)
             true
         }
 
@@ -86,8 +94,8 @@ class ChallengesFragment : BaseFragment(), UserIdProvider {
     }
 
     private fun selectChallenge(bottomNavigationView: BottomNavigationView) {
-        when (this.challengesViewModel.selectedItem) {
-            R.id.action_authored_challenges -> bottomNavigationView.selectedItemId = R.id.action_authored_challenges
+        when (this.challengesViewModel.challengeType) {
+            ChallengeType.Authored -> bottomNavigationView.selectedItemId = R.id.action_authored_challenges
             else -> bottomNavigationView.selectedItemId = R.id.action_completed_challenges
         }
     }

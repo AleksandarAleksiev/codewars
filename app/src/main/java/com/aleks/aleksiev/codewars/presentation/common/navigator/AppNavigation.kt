@@ -1,7 +1,9 @@
 package com.aleks.aleksiev.codewars.presentation.common.navigator
 
 import android.support.v4.app.FragmentManager
+import com.aleks.aleksiev.codewars.presentation.challengedetails.ChallengeDetailsFragment
 import com.aleks.aleksiev.codewars.presentation.challenges.ChallengesFragment
+import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
 import com.aleks.aleksiev.codewars.presentation.main.MainActivity
 import com.aleks.aleksiev.codewars.presentation.search.SearchFragment
 import javax.inject.Inject
@@ -21,6 +23,12 @@ class AppNavigation @Inject constructor(private val mainActivity: MainActivity) 
         val fragment = mainActivity.supportFragmentManager.findFragmentByTag(ChallengesFragment.TAG) as? ChallengesFragment
             ?: ChallengesFragment.newInstance(memberId)
         mainActivity.showScreen(fragment, ChallengesFragment.TAG, true, true)
+    }
+
+    override fun challengeDetails(challengesGroupId: Long, challengeId: String, challengeType: ChallengeType) {
+        val fragment = mainActivity.supportFragmentManager.findFragmentByTag(ChallengeDetailsFragment.TAG) as? ChallengeDetailsFragment
+            ?: ChallengeDetailsFragment.newInstance(challengesGroupId, challengeId, challengeType)
+        mainActivity.showScreen(fragment, ChallengeDetailsFragment.TAG, true, true)
     }
 
     override fun taskInProgress(inProgress: Boolean) {

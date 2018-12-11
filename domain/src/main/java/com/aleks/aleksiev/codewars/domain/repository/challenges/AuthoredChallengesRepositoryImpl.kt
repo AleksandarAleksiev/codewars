@@ -32,6 +32,10 @@ class AuthoredChallengesRepositoryImpl @Inject constructor(
         return database.authoredChallengeDao().insert(authoredChallenge)
     }
 
+    override fun getAuthoredChallenges(challengesGroupId: Long): AuthoredChallengeEntity? {
+        return database.authoredChallengeDao().getAuthoredChallengesGroup(challengesGroupId)
+    }
+
     private fun cacheResponse(userId: Long, responseBody: AuthoredChallengesResponse): AuthoredChallengeEntity {
         val authoredChallenge = toAuthoredChallenge(userId, responseBody)
         authoredChallenge.id = saveAuthoredChallenges(authoredChallenge)
@@ -39,7 +43,7 @@ class AuthoredChallengesRepositoryImpl @Inject constructor(
     }
 
     private fun fetchFromDB(userId: Long): AuthoredChallengeEntity? {
-        return database.authoredChallengeDao().loadUserAuthoredChalenges(userId)
+        return database.authoredChallengeDao().getUserAuthoredChalenges(userId)
     }
 
     private fun fetchNetwork(userId: Long, userName: String): AuthoredChallengeEntity {

@@ -1,4 +1,4 @@
-package com.aleks.aleksiev.codewars.domain.datamodel
+package com.aleks.aleksiev.codewars.domain.model
 
 data class ChallengesDomainModel(
     val totalPages: Int,

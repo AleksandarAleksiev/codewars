@@ -29,6 +29,10 @@ class CompletedChallengesRepositoryImpl  @Inject constructor(
         return result
     }
 
+    override fun getCompletedChallenges(challengesGroupId: Long): CompletedChallengeEntity? {
+        return database.completedChallengeDao().getCompletedChallengesGroup(challengesGroupId)
+    }
+
     override fun saveCompletedChallenges(completedChallenge: CompletedChallengeEntity): Long {
         return database.completedChallengeDao().insert(completedChallenge)
     }
@@ -40,7 +44,7 @@ class CompletedChallengesRepositoryImpl  @Inject constructor(
     }
 
     private fun fetchFromDB(userId: Long, page: Int): CompletedChallengeEntity? {
-        return database.completedChallengeDao().loadUserCompletedChalenges(userId, page)
+        return database.completedChallengeDao().loadUserCompletedChallenges(userId, page)
     }
 
     private fun fetchNetwork(userId: Long, userName: String, page: Int): CompletedChallengeEntity {

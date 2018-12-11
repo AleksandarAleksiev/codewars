@@ -17,7 +17,7 @@ abstract class SearchModule {
     @Binds
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
-    abstract fun bindsHomeViewModel(searchViewModel: SearchViewModel): ViewModel
+    abstract fun bindsSearchViewModel(searchViewModel: SearchViewModel): ViewModel
 
     @Binds
     abstract fun bindsSearchHistoryUpdateListener(searchFragment: SearchFragment): SearchHistoryUpdateListener

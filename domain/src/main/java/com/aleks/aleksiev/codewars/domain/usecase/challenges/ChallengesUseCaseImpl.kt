@@ -1,7 +1,7 @@
-package com.aleks.aleksiev.codewars.domain.usecase
+package com.aleks.aleksiev.codewars.domain.usecase.challenges
 
-import com.aleks.aleksiev.codewars.domain.datamodel.ChallengeDomainModel
-import com.aleks.aleksiev.codewars.domain.datamodel.ChallengesDomainModel
+import com.aleks.aleksiev.codewars.domain.model.ChallengeDomainModel
+import com.aleks.aleksiev.codewars.domain.model.ChallengesDomainModel
 import com.aleks.aleksiev.codewars.model.entities.AuthoredChallengeEntity
 import com.aleks.aleksiev.codewars.model.entities.CompletedChallengeEntity
 import com.aleks.aleksiev.codewars.model.repository.AuthoredChallengesRepository
@@ -52,15 +52,17 @@ class ChallengesUseCaseImpl @Inject constructor(
 
     private fun toChallengeModel(challengeId: Long, completedChallenge: CompletedChallengeEntityModel): ChallengeDomainModel {
         return ChallengeDomainModel(
-            challengeId = challengeId,
+            challengesGroupId = challengeId,
+            challengeId = completedChallenge.challengeId,
             challengeName = completedChallenge.challengeName
         )
     }
 
-    private fun toChallengeModel(challengeId: Long, completedChallenge: AuthoredChallengeEntityModel): ChallengeDomainModel {
+    private fun toChallengeModel(challengeId: Long, authoredChallenge: AuthoredChallengeEntityModel): ChallengeDomainModel {
         return ChallengeDomainModel(
-            challengeId = challengeId,
-            challengeName = completedChallenge.challengeName
+            challengesGroupId = challengeId,
+            challengeId = authoredChallenge.challengeId,
+            challengeName = authoredChallenge.challengeName
         )
     }
 }

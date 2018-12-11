@@ -15,7 +15,7 @@ abstract class ChallengesModule {
     @Binds
     @IntoMap
     @ViewModelKey(ChallengesViewModel::class)
-    abstract fun bindsLoginViewodel(challengesViewModel: ChallengesViewModel): ViewModel
+    abstract fun bindsChallengesViewModel(challengesViewModel: ChallengesViewModel): ViewModel
 
     @Binds
     abstract fun bindsUserIdProvider(challengesFragment: ChallengesFragment): UserIdProvider

@@ -10,16 +10,18 @@ import com.aleks.aleksiev.codewars.databinding.LayoutNetworkStateBinding
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel
 import com.aleks.aleksiev.codewars.presentation.challenges.model.NetworkStateModel
 import com.aleks.aleksiev.codewars.presentation.diffutils.DiffUtilsCallback
+import com.aleks.aleksiev.codewars.utils.ItemClicked
 import com.aleks.aleksiev.codewars.utils.NetworkState
 import javax.inject.Inject
 
 class ChallengesAdapter @Inject constructor() : PagedListAdapter<ChallengeModel, RecyclerView.ViewHolder>(DiffUtilsCallback<ChallengeModel>()) {
 
     private var networkState: NetworkState? = null
+    var itemClickedHandler: ItemClicked<ChallengeModel?>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return when (viewType) {
+        val viewHolder = when (viewType) {
             R.layout.layout_completed_challenge -> {
                 val binding = LayoutCompletedChallengeBinding.inflate(inflater, parent, false)
                 ChallengeViewHolder(binding)
@@ -30,6 +32,15 @@ class ChallengesAdapter @Inject constructor() : PagedListAdapter<ChallengeModel,
             }
             else -> throw IllegalArgumentException("unknown view type")
         }
+
+        viewHolder.itemView.setOnClickListener {
+            val position = viewHolder.getAdapterPosition()
+            if (position != RecyclerView.NO_POSITION) {
+                itemClickedHandler?.onItemClicked(getItem(position))
+            }
+        }
+
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

@@ -1,7 +1,7 @@
 package com.aleks.aleksiev.codewars.presentation.search
 
 import android.util.Log
-import com.aleks.aleksiev.codewars.domain.datamodel.Member
+import com.aleks.aleksiev.codewars.domain.model.Member
 import com.aleks.aleksiev.codewars.domain.usecase.search.MemberSearchUseCase
 import com.aleks.aleksiev.codewars.presentation.common.BaseViewModel
 import com.aleks.aleksiev.codewars.presentation.common.navigator.Navigator

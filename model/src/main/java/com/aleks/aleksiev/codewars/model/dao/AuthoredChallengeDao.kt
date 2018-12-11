@@ -20,5 +20,8 @@ interface AuthoredChallengeDao {
     fun delete(authoredChallenge: AuthoredChallengeEntity)
 
     @Query("select * from authored_challenge where user_id = :userId")
-    fun loadUserAuthoredChalenges(userId: Long): AuthoredChallengeEntity?
+    fun getUserAuthoredChalenges(userId: Long): AuthoredChallengeEntity
+
+    @Query("select * from authored_challenge where id = :challengesId")
+    fun getAuthoredChallengesGroup(challengesId: Long): AuthoredChallengeEntity?
 }

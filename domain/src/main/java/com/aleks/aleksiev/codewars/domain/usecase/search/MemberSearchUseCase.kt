@@ -1,6 +1,6 @@
 package com.aleks.aleksiev.codewars.domain.usecase.search
 
-import com.aleks.aleksiev.codewars.domain.datamodel.Member
+import com.aleks.aleksiev.codewars.domain.model.Member
 import io.reactivex.Flowable
 
 interface MemberSearchUseCase {

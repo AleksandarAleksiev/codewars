@@ -32,7 +32,9 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.viewModel = mainViewModel
-        mainViewModel.search()
+        if (savedInstanceState == null) {
+            mainViewModel.search()
+        }
     }
 
     fun taskInProgress(inProgress: Boolean) {

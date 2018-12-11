@@ -1,6 +1,6 @@
-package com.aleks.aleksiev.codewars.domain.usecase
+package com.aleks.aleksiev.codewars.domain.usecase.challenges
 
-import com.aleks.aleksiev.codewars.domain.datamodel.ChallengesDomainModel
+import com.aleks.aleksiev.codewars.domain.model.ChallengesDomainModel
 import io.reactivex.Single
 
 interface ChallengesUseCase {
