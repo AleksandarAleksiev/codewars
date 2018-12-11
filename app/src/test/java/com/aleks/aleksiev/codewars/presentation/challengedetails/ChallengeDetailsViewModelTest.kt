@@ -31,8 +31,8 @@ class ChallengeDetailsViewModelTest : BaseTest() {
 
     override fun setUp() {
         super.setUp()
-        challengeDetailsViewModel = ChallengeDetailsViewModel(challengeDetailsState,
-            navigator, schedulersFacade, challengeDetailsUseCase)
+        challengeDetailsViewModel = ChallengeDetailsViewModel(challengeDetailsState, schedulersFacade, challengeDetailsUseCase)
+        challengeDetailsViewModel.navigator = navigator
     }
 
     @Test

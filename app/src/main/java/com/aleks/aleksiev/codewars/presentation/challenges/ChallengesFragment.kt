@@ -22,9 +22,7 @@ import com.aleks.aleksiev.codewars.utils.NetworkState
 import com.aleks.aleksiev.codewars.utils.RecyclerViewItemsSpaceDecoration
 import javax.inject.Inject
 
-class ChallengesFragment : BaseFragment(), UserIdProvider, ItemClicked<ChallengeModel?> {
-
-    private var memberId: Long = 0
+class ChallengesFragment : BaseFragment(), ItemClicked<ChallengeModel?> {
 
     @Inject
     lateinit var challengesAdapter: ChallengesAdapter
@@ -38,7 +36,7 @@ class ChallengesFragment : BaseFragment(), UserIdProvider, ItemClicked<Challenge
 
         val bundle = savedInstanceState ?: arguments
         bundle?.let {
-            this.memberId = it.memberId
+            this.challengesViewModel.userId = it.memberId
             this.challengesViewModel.selectedItem = it.selectedMenuId
         }
 
@@ -54,22 +52,26 @@ class ChallengesFragment : BaseFragment(), UserIdProvider, ItemClicked<Challenge
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        challengesViewModel.navigator = navigator
+    }
+
     override fun onPause() {
         super.onPause()
         challengesViewModel.dispose()
+        challengesViewModel.navigator = null
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.memberId = this.memberId
+        outState.memberId = this.challengesViewModel.userId
         outState.selectedMenuId = this.challengesViewModel.selectedItem
     }
 
-    override fun getUserId(): Long = memberId
-
     override fun onItemClicked(item: ChallengeModel?) {
         item?.let {
-            challengesViewModel.challengeDetails(it.challengesGroupId, it.challengeId, challengesViewModel.challengeType)
+            navigator?.challengeDetails(it.challengesGroupId, it.challengeId, challengesViewModel.challengeType)
         }
     }
 

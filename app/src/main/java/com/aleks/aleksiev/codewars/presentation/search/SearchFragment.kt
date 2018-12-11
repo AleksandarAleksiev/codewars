@@ -45,13 +45,14 @@ class SearchFragment : BaseFragment(),
 
     override fun onResume() {
         super.onResume()
-        viewLifecycleOwner
+        searchViewModel.navigator = this.navigator
         searchViewModel.searchHistory(Constants.MAX_SEARCHED_ITEMS_TO_SHOW)
     }
 
     override fun onPause() {
         super.onPause()
         searchViewModel.dispose()
+        searchViewModel.navigator = null
     }
 
     override fun onQueryTextSubmit(queryText: String?): Boolean {
@@ -71,7 +72,7 @@ class SearchFragment : BaseFragment(),
     }
 
     override fun onItemClicked(item: FoundMember) {
-        searchViewModel.memberChallenges(item.memberId)
+        this.navigator?.memberChallenges(item.memberId)
     }
 
     private fun initView(searchBinding: FragmentSearchBinding) {

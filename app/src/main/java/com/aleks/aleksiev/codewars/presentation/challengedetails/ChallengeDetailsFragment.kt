@@ -29,16 +29,23 @@ class ChallengeDetailsFragment : BaseFragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        challengeDetailsViewModel.getChallengeDetails()
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentChallengeDetailsBinding>(inflater, R.layout.fragment_challenge_details, container, false)
         binding.challenge = challengeDetailsViewModel.challengeDetailsState
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        challengeDetailsViewModel.navigator = this.navigator
+        challengeDetailsViewModel.getChallengeDetails()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        challengeDetailsViewModel.dispose()
+        challengeDetailsViewModel.navigator = null
     }
 
     companion object {

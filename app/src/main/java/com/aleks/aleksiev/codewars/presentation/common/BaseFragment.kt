@@ -2,6 +2,7 @@ package com.aleks.aleksiev.codewars.presentation.common
 
 import android.content.Context
 import android.support.v4.app.Fragment
+import com.aleks.aleksiev.codewars.presentation.main.MainActivity
 import com.aleks.aleksiev.codewars.presentation.viewmodel.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
@@ -12,7 +13,11 @@ abstract class BaseFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     protected val parentActivity by lazy {
-        activity as? BaseActivity
+        activity as? MainActivity
+    }
+
+    val navigator by lazy {
+        parentActivity?.navigator
     }
 
     override fun onAttach(context: Context?) {

@@ -21,8 +21,6 @@ import org.mockito.Mock
 class ChallengesViewModelTest : BaseTest() {
 
     @Mock
-    private lateinit var userIdProvider: UserIdProvider
-    @Mock
     private lateinit var challengesUseCase: ChallengesUseCase
     @Mock
     private lateinit var challengesObserver: Observer<PagedList<ChallengeModel>>
@@ -44,7 +42,6 @@ class ChallengesViewModelTest : BaseTest() {
 
     @Test
     fun givenSelectedCompletedChallengesWhenFetchChallengesThenFetchCompletedChallengesIsCalled() {
-        whenever(userIdProvider.getUserId()).then { 1L }
         whenever(challengesUseCase.fetchCompletedChallenges(any(), any())).then { Single.just(challengesDomainModel) }
 
         challengesViewModel.selectedItem = R.id.action_completed_challenges
@@ -56,7 +53,6 @@ class ChallengesViewModelTest : BaseTest() {
 
     @Test
     fun givenSelectedAuthoredChallengesWhenFetchChallengesThenFetchAuthoredChallengesIsCalled() {
-        whenever(userIdProvider.getUserId()).then { 1L }
         whenever(challengesUseCase.fetchAuthoredChallenges(any())).then { Single.just(challengesDomainModel) }
 
         challengesViewModel.selectedItem = R.id.action_authored_challenges
@@ -80,7 +76,6 @@ class ChallengesViewModelTest : BaseTest() {
 
     @Test
     fun givenSelectedCompletedChallengesWhenFetchChallengesThenChallengesListIsUpdated() {
-        whenever(userIdProvider.getUserId()).then { 1L }
         whenever(challengesUseCase.fetchCompletedChallenges(any(), any())).then { Single.just(challengesDomainModel) }
 
         challengesViewModel.selectedItem = R.id.action_completed_challenges
@@ -95,7 +90,6 @@ class ChallengesViewModelTest : BaseTest() {
 
     @Test
     fun givenSelectedAuthoredChallengesWhenFetchChallengesThenChallengesListIsUpdated() {
-        whenever(userIdProvider.getUserId()).then { 1L }
         whenever(challengesUseCase.fetchAuthoredChallenges(any())).then { Single.just(challengesDomainModel) }
 
         challengesViewModel.selectedItem = R.id.action_authored_challenges

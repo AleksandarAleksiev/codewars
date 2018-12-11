@@ -15,7 +15,6 @@ import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengesModel
 import com.aleks.aleksiev.codewars.presentation.common.BaseViewModel
-import com.aleks.aleksiev.codewars.presentation.common.navigator.Navigator
 import com.aleks.aleksiev.codewars.utils.Constants
 import com.aleks.aleksiev.codewars.utils.NetworkState
 import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacade
@@ -23,14 +22,13 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class ChallengesViewModel @Inject constructor(
-    private val userIdProvider: UserIdProvider,
     private val schedulersFacade: SchedulersFacade,
-    private val challengesUseCase: ChallengesUseCase,
-    private val navigator: Navigator
-) : BaseViewModel(), Navigator by navigator {
+    private val challengesUseCase: ChallengesUseCase
+) : BaseViewModel() {
 
     @IdRes
     var selectedItem: Int = R.id.action_completed_challenges
+    var userId: Long = -1
     var challenges: LiveData<PagedList<ChallengeModel>>
     val challengeType: ChallengeType
         get() {
@@ -72,12 +70,12 @@ class ChallengesViewModel @Inject constructor(
     }
 
     private fun fetchCompletedChallenges(page: Int): Single<ChallengesModel> {
-        return challengesUseCase.fetchCompletedChallenges(userIdProvider.getUserId(), page)
+        return challengesUseCase.fetchCompletedChallenges(userId, page)
             .map { toChallengesModel(it) }
     }
 
     private fun fetchAuthoredChallenges(): Single<ChallengesModel> {
-        return challengesUseCase.fetchAuthoredChallenges(userIdProvider.getUserId())
+        return challengesUseCase.fetchAuthoredChallenges(userId)
             .map { toChallengesModel(it) }
     }
 
