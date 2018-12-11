@@ -56,7 +56,9 @@ class SearchFragment : BaseFragment(),
 
     override fun onQueryTextSubmit(queryText: String?): Boolean {
         parentActivity?.hideKeyboard()
-        searchViewModel.findMember(queryText)
+        queryText?.let {
+            searchViewModel.findMember(it)
+        }
         return true
     }
 

@@ -1,6 +1,5 @@
 package com.aleks.aleksiev.codewars.presentation.search
 
-import android.util.Log
 import com.aleks.aleksiev.codewars.domain.model.Member
 import com.aleks.aleksiev.codewars.domain.usecase.search.MemberSearchUseCase
 import com.aleks.aleksiev.codewars.presentation.common.BaseViewModel
@@ -16,20 +15,16 @@ class SearchViewModel @Inject constructor(private val navigator: Navigator,
                                           private val searchHistoryUpdateListener: SearchHistoryUpdateListener
 ) : BaseViewModel(), Navigator by navigator {
 
-    fun findMember(memberName: String?) {
-        memberName?.let {
-            taskInProgress(true)
-            add(Single.fromCallable { memberSearchUseCase.findMember(it) }
-                .subscribeOn(schedulersFacade.ioScheduler())
-                .observeOn(schedulersFacade.mainThreadScheduler())
-                .subscribe({member ->
-                    Log.d("", "")
-                    taskInProgress(false)
-                }, { error ->
-                    Log.d("", "")
-                    taskInProgress(false)
-                }))
-        }
+    fun findMember(memberName: String) {
+        taskInProgress(true)
+        add(Single.fromCallable { memberSearchUseCase.findMember(memberName) }
+            .subscribeOn(schedulersFacade.ioScheduler())
+            .observeOn(schedulersFacade.mainThreadScheduler())
+            .subscribe({member ->
+                taskInProgress(false)
+            }, { error ->
+                taskInProgress(false)
+            }))
     }
 
     fun searchHistory(maxSearches: Int) {
@@ -44,7 +39,6 @@ class SearchViewModel @Inject constructor(private val navigator: Navigator,
                 searchHistoryUpdateListener.searchHistoryUpdated(members)
                 taskInProgress(false)
             }, {error ->
-                Log.d("", "")
                 taskInProgress(false)
             }))
     }
