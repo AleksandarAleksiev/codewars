@@ -2,6 +2,7 @@ package com.aleks.aleksiev.codewars.presentation.search
 
 import com.aleks.aleksiev.codewars.domain.model.Member
 import com.aleks.aleksiev.codewars.domain.usecase.search.MemberSearchUseCase
+import com.aleks.aleksiev.codewars.presentation.BaseTest
 import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.times
@@ -32,12 +33,14 @@ class SearchViewModelTest : BaseTest() {
         id = 1
     )
 
+    private val searchLimit = 1
+    private val memberName = "member_name"
     private val searchHistory = listOf(member)
 
     @Test
     fun givenValidUserNameMemberIsFound() {
         whenever(memberSearchUseCase.findMember(anyString())).then { member }
-        searchViewModel.findMember(anyString())
+        searchViewModel.findMember(memberName)
         triggerActions()
 
         verify(memberSearchUseCase, times(1)).findMember(any())
@@ -46,7 +49,7 @@ class SearchViewModelTest : BaseTest() {
     @Test
     fun whenLookingForMemberTaskInProgressIsCalledTwice() {
         whenever(memberSearchUseCase.findMember(anyString())).then { member }
-        searchViewModel.findMember(anyString())
+        searchViewModel.findMember(memberName)
         triggerActions()
 
         verify(navigator, times(2)).taskInProgress(any())
@@ -56,7 +59,7 @@ class SearchViewModelTest : BaseTest() {
     fun searchedMembersListIsUpdated() {
 
         whenever(memberSearchUseCase.observeMemberSearch(any())).then { Flowable.fromArray(searchHistory) }
-        searchViewModel.searchHistory(any())
+        searchViewModel.searchHistory(searchLimit)
         triggerActions()
 
         verify(searchHistoryUpdateListener, times(1)).searchHistoryUpdated(any())
@@ -65,7 +68,7 @@ class SearchViewModelTest : BaseTest() {
     @Test
     fun whenLoadingSearchedHistoryTaskInProgressIsCalledTwice() {
         whenever(memberSearchUseCase.observeMemberSearch(any())).then { Flowable.fromArray(emptyArray<FoundMember>()) }
-        searchViewModel.searchHistory(any())
+        searchViewModel.searchHistory(searchLimit)
         triggerActions()
 
         verify(navigator, times(2)).taskInProgress(any())
