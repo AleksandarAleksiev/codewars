@@ -1,5 +1,6 @@
 package com.aleks.aleksiev.codewars.presentation.challengedetails
 
+import com.aleks.aleksiev.codewars.domain.model.ChallengeDetailsDomainModel
 import com.aleks.aleksiev.codewars.domain.usecase.challenge.ChallengeDetailsUseCase
 import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
@@ -26,6 +27,7 @@ class ChallengeDetailsViewModel @Inject constructor(
             .subscribeOn(schedulersFacade.ioScheduler())
             .observeOn(schedulersFacade.mainThreadScheduler())
             .subscribe({challengeDetails ->
+                toChallengeDetailsState(challengeDetails)
                 renderState(RenderState.LoadingState(false))
             }, {error ->
                 renderState(RenderState.LoadingState(false))
@@ -39,10 +41,21 @@ class ChallengeDetailsViewModel @Inject constructor(
             .subscribeOn(schedulersFacade.ioScheduler())
             .observeOn(schedulersFacade.mainThreadScheduler())
             .subscribe({challengeDetails ->
+                toChallengeDetailsState(challengeDetails)
                 renderState(RenderState.LoadingState(false))
             }, {error ->
                 renderState(RenderState.LoadingState(false))
             })
         )
+    }
+
+    private fun toChallengeDetailsState(challengeDetails: ChallengeDetailsDomainModel) {
+        with(challengeDetailsState) {
+            this.challengeName = challengeDetails.challengeName
+            this.challengeCompletedAt = challengeDetails.challengeCompletedAt
+            this.challengeLanguages = challengeDetails.challengeLanguages
+            this.challengeTags = challengeDetails.challengeTags
+            this.challengeDescription = challengeDetails.challengeDescription
+        }
     }
 }

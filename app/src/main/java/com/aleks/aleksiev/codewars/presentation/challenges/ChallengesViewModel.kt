@@ -91,7 +91,9 @@ class ChallengesViewModel @Inject constructor(
         return ChallengeModel(
             challengesGroupId = completeChallenge.challengesGroupId,
             challengeId = completeChallenge.challengeId,
-            challengeName = completeChallenge.challengeName
+            challengeName = completeChallenge.challengeName,
+            completedAt = completeChallenge.completedAt,
+            challengeDescription = completeChallenge.challengeDescription.substring(0, Math.min(Constants.MAX_DISPLAY_CHALLENGES_DESCR, completeChallenge.challengeDescription.length))
         )
     }
 }

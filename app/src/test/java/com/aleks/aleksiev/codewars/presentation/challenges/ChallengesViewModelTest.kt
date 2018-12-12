@@ -31,7 +31,9 @@ class ChallengesViewModelTest : BaseTest() {
     private val challengeDomainModel = ChallengeDomainModel(
         challengesGroupId = 1,
         challengeId = "test_challenge_id",
-        challengeName = "Test Challenge Name"
+        challengeName = "Test Challenge Name",
+        completedAt = "Today",
+        challengeDescription = "Description"
     )
 
     private val challengesDomainModel = ChallengesDomainModel(

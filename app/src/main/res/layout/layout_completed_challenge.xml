@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="android.text.TextUtils"/>
+        <import type="android.view.View"/>
         <variable
             name="challenge"
             type="com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel"/>
@@ -13,16 +14,77 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/completedChallengeTextView"
-            style="@style/textViewStyleAutoSizeMedium"
+            android:id="@+id/challengeTextLayout"
+            style="@style/LabelTextViewStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:textStyle="bold"
-            android:text="@{TextUtils.isEmpty(challenge.challengeName) ? String.format(@string/completed_challenge, @string/unknown) : String.format(@string/completed_challenge, challenge.challengeName)}"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/top_margin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintDimensionRatio="H,1:0.1"
+            android:text="@string/challenge_name"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/challengeTextView"
+            style="@style/TitleTextViewStyle"
+            android:focusable="false"
+            android:clickable="false"
+            android:longClickable="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/challengeTextLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@{TextUtils.isEmpty(challenge.challengeName) ? @string/unknown : challenge.challengeName}"
+            tools:text="@tools:sample/full_names"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/challengeAtTextLayout"
+            style="@style/LabelTextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/top_margin"
+            app:layout_constraintTop_toBottomOf="@+id/challengeTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="@{TextUtils.isEmpty(challenge.completedAt) ? View.GONE : View.VISIBLE}"
+            android:text="@string/completed_at"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/challengeAtTextView"
+            style="@style/DetailsTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/challengeAtTextLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@{TextUtils.isEmpty(challenge.completedAt) ? @string/unknown : challenge.completedAt}"
+            android:visibility="@{TextUtils.isEmpty(challenge.completedAt) ? View.GONE : View.VISIBLE}"
+            tools:text="@tools:sample/date/ddmmyy"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/challengeDescriptionTextLayout"
+            style="@style/LabelTextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/top_margin"
+            app:layout_constraintTop_toBottomOf="@+id/challengeAtTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="@{TextUtils.isEmpty(challenge.challengeDescription) ? View.GONE : View.VISIBLE}"
+            android:text="@string/challenge_description"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/challengeDescriptionTextView"
+            style="@style/DetailsTextViewStyleAutoSize"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/desc_text_max_height"
+            android:ellipsize="end"
+            app:layout_constraintTop_toBottomOf="@+id/challengeDescriptionTextLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@{TextUtils.isEmpty(challenge.challengeDescription) ? @string/unknown : challenge.challengeDescription}"
+            android:visibility="@{TextUtils.isEmpty(challenge.challengeDescription) ? View.GONE : View.VISIBLE}"
             tools:text="@tools:sample/full_names"/>
 
     </android.support.constraint.ConstraintLayout>

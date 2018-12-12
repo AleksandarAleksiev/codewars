@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="android.text.TextUtils"/>
+        <import type="android.view.View"/>
         <variable
             name="member"
             type="com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember"/>
@@ -13,55 +14,95 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/nameTextView"
-            style="@style/textViewStyleAutoSizeMedium"
+            android:id="@+id/userNameTextInputLayout"
+            style="@style/LabelTextViewStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:textStyle="bold"
-            android:text="@{TextUtils.isEmpty(member.name) ? String.format(@string/user_name, @string/unknown) : String.format(@string/user_name, member.name)}"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintDimensionRatio="H,1:0.1"
-            tools:text="@tools:sample/full_names"/>
+            android:text="@string/user_user_name"/>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/userNameTextView"
-            style="@style/textViewStyleAutoSizeMedium"
+            style="@style/TitleTextViewStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:textStyle="bold"
-            android:text="@{TextUtils.isEmpty(member.userName) ? String.format(@string/user_name, @string/unknown) : String.format(@string/user_user_name, member.userName)}"
-            android:layout_marginTop="@dimen/top_margin"
-            app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/userNameTextInputLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintDimensionRatio="H,1:0.1"
+            android:text="@{member.userName}"
             tools:text="@tools:sample/full_names"/>
 
+
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/rankTextView"
-            style="@style/textViewStyleAutoSizeMedium"
-            android:text="@{String.format(@string/user_rank, member.rank)}"
+            android:id="@+id/nameTextInputLayout"
+            style="@style/LabelTextViewStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/top_margin"
             app:layout_constraintTop_toBottomOf="@+id/userNameTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintDimensionRatio="H,1:0.1"
-            tools:text="Rank: 1"/>
+            android:visibility="@{TextUtils.isEmpty(member.name) ? View.GONE : View.VISIBLE}"
+            android:text="@string/user_name"/>
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/bestLanguageTextView"
-            style="@style/textViewStyleAutoSizeMedium"
+            android:id="@+id/nameTextView"
+            style="@style/DetailsTextViewStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{member.name}"
+            android:visibility="@{TextUtils.isEmpty(member.name) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toBottomOf="@+id/nameTextInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="@tools:sample/full_names"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/rankTextInputLayout"
+            style="@style/LabelTextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/top_margin"
+            app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/user_rank"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/rankTextView"
+            style="@style/DetailsTextViewStyle"
+            android:text="@{member.rank}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/rankTextInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="1"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/bestLanguageTextInputLayout"
+            style="@style/LabelTextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/top_margin"
             app:layout_constraintTop_toBottomOf="@+id/rankTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintDimensionRatio="H,1:0.1"
+            android:visibility="@{TextUtils.isEmpty(member.bestLanguage) ? View.GONE : View.VISIBLE}"
+            android:text="@string/user_best_language"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/bestLanguageTextView"
+            style="@style/DetailsTextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{member.bestLanguage}"
+            android:visibility="@{TextUtils.isEmpty(member.bestLanguage) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toBottomOf="@+id/bestLanguageTextInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="Best language: C#"/>
 
     </android.support.constraint.ConstraintLayout>

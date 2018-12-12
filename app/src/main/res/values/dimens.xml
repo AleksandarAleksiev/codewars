@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="content_padding">12dp</dimen>
     <dimen name="top_margin">8dp</dimen>
     <dimen name="retry_padding">8dp</dimen>
+
+    <dimen name="title_text_size">28sp</dimen>
+    <dimen name="details_text_size">24sp</dimen>
+    <dimen name="label_text_size">16sp</dimen>
+
+    <dimen name="desc_text_max_height">80dp</dimen>
 </resources>

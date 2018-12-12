@@ -1,5 +1,7 @@
 package com.aleks.aleksiev.codewars.domain.usecase.challenges
 
+import com.aleks.aleksiev.codewars.domain.Constants
+import com.aleks.aleksiev.codewars.domain.formatString
 import com.aleks.aleksiev.codewars.domain.model.ChallengeDomainModel
 import com.aleks.aleksiev.codewars.domain.model.ChallengesDomainModel
 import com.aleks.aleksiev.codewars.model.entities.AuthoredChallengeEntity
@@ -54,7 +56,9 @@ class ChallengesUseCaseImpl @Inject constructor(
         return ChallengeDomainModel(
             challengesGroupId = challengeId,
             challengeId = completedChallenge.challengeId,
-            challengeName = completedChallenge.challengeName
+            challengeName = completedChallenge.challengeName,
+            completedAt = completedChallenge.completedAt.formatString(Constants.DATE_TIME_FORMAT),
+            challengeDescription = Constants.EMPTY_STRING
         )
     }
 
@@ -62,7 +66,9 @@ class ChallengesUseCaseImpl @Inject constructor(
         return ChallengeDomainModel(
             challengesGroupId = challengeId,
             challengeId = authoredChallenge.challengeId,
-            challengeName = authoredChallenge.challengeName
+            challengeName = authoredChallenge.challengeName,
+            completedAt = Constants.EMPTY_STRING,
+            challengeDescription = authoredChallenge.challengeDescription
         )
     }
 }
