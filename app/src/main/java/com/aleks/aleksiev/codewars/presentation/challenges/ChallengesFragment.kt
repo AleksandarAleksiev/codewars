@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.databinding.FragmentChallengesBinding
+import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
 import com.aleks.aleksiev.codewars.presentation.common.BaseFragment
@@ -52,15 +53,9 @@ class ChallengesFragment : BaseFragment(), ItemClicked<ChallengeModel?> {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        challengesViewModel.navigator = navigator
-    }
-
     override fun onPause() {
         super.onPause()
         challengesViewModel.dispose()
-        challengesViewModel.navigator = null
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -93,6 +88,7 @@ class ChallengesFragment : BaseFragment(), ItemClicked<ChallengeModel?> {
 
         challengesViewModel.challenges.observe(viewLifecycleOwner, Observer<PagedList<ChallengeModel>> { challengesAdapter.submitList(it) })
         challengesViewModel.getNetworkState().observe(viewLifecycleOwner, Observer<NetworkState> { challengesAdapter.setNetworkState(it) })
+        challengesViewModel.renderState.observe(viewLifecycleOwner, Observer<RenderState> { renderState(it) })
     }
 
     private fun selectChallenge(bottomNavigationView: BottomNavigationView) {

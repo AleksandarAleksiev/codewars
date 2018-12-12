@@ -1,6 +1,7 @@
 package com.aleks.aleksiev.codewars.presentation.challengedetails
 
 import com.aleks.aleksiev.codewars.domain.usecase.challenge.ChallengeDetailsUseCase
+import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
 import com.aleks.aleksiev.codewars.presentation.common.BaseViewModel
 import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacade
@@ -20,27 +21,27 @@ class ChallengeDetailsViewModel @Inject constructor(
     }
 
     private fun getCompletedChallengeDetails(challengesGroupId: Long, challengeId: String) {
-        navigator?.taskInProgress(true)
+        renderState(RenderState.LoadingState(true))
         add(challengeDetailsUseCase.getCompletedChallengeDetails(challengesGroupId, challengeId)
             .subscribeOn(schedulersFacade.ioScheduler())
             .observeOn(schedulersFacade.mainThreadScheduler())
             .subscribe({challengeDetails ->
-                navigator?.taskInProgress(false)
+                renderState(RenderState.LoadingState(false))
             }, {error ->
-                navigator?.taskInProgress(false)
+                renderState(RenderState.LoadingState(false))
             })
         )
     }
 
     private fun getAuthoredChallengeDetails(challengesGroupId: Long, challengeId: String) {
-        navigator?.taskInProgress(true)
+        renderState(RenderState.LoadingState(true))
         add(challengeDetailsUseCase.getAuthoredChallengeDetails(challengesGroupId, challengeId)
             .subscribeOn(schedulersFacade.ioScheduler())
             .observeOn(schedulersFacade.mainThreadScheduler())
             .subscribe({challengeDetails ->
-                navigator?.taskInProgress(false)
+                renderState(RenderState.LoadingState(false))
             }, {error ->
-                navigator?.taskInProgress(false)
+                renderState(RenderState.LoadingState(false))
             })
         )
     }

@@ -1,6 +1,7 @@
 package com.aleks.aleksiev.codewars.presentation.search
 
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.databinding.FragmentSearchBinding
+import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.common.BaseFragment
 import com.aleks.aleksiev.codewars.presentation.hideKeyboard
 import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember
@@ -40,19 +42,19 @@ class SearchFragment : BaseFragment(),
         searchBinding.searchViewModel = searchViewModel
         initView(searchBinding)
 
+        searchViewModel.renderState.observe(viewLifecycleOwner, Observer<RenderState> { renderState(it) })
+
         return searchBinding.root
     }
 
     override fun onResume() {
         super.onResume()
-        searchViewModel.navigator = this.navigator
         searchViewModel.searchHistory(Constants.MAX_SEARCHED_ITEMS_TO_SHOW)
     }
 
     override fun onPause() {
         super.onPause()
         searchViewModel.dispose()
-        searchViewModel.navigator = null
     }
 
     override fun onQueryTextSubmit(queryText: String?): Boolean {

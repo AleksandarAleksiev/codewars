@@ -3,6 +3,7 @@ package com.aleks.aleksiev.codewars.presentation.search
 import com.aleks.aleksiev.codewars.domain.model.Member
 import com.aleks.aleksiev.codewars.domain.usecase.search.MemberSearchUseCase
 import com.aleks.aleksiev.codewars.presentation.BaseTest
+import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.times
@@ -13,6 +14,7 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.InjectMocks
 import org.mockito.Mock
+import org.mockito.Mockito
 
 class SearchViewModelTest : BaseTest() {
 
@@ -37,6 +39,11 @@ class SearchViewModelTest : BaseTest() {
     private val memberName = "member_name"
     private val searchHistory = listOf(member)
 
+    override fun setUp() {
+        super.setUp()
+        searchViewModel.renderState.observeForever(renderStateObserver)
+    }
+
     @Test
     fun givenValidUserNameMemberIsFound() {
         whenever(memberSearchUseCase.findMember(anyString())).then { member }
@@ -52,7 +59,7 @@ class SearchViewModelTest : BaseTest() {
         searchViewModel.findMember(memberName)
         triggerActions()
 
-        verify(navigator, times(2)).taskInProgress(any())
+        verify(renderStateObserver, times(2)).onChanged(any())
     }
 
     @Test
@@ -71,6 +78,6 @@ class SearchViewModelTest : BaseTest() {
         searchViewModel.searchHistory(searchLimit)
         triggerActions()
 
-        verify(navigator, times(2)).taskInProgress(any())
+        verify(renderStateObserver, times(2)).onChanged(Mockito.any(RenderState.LoadingState::class.java))
     }
 }

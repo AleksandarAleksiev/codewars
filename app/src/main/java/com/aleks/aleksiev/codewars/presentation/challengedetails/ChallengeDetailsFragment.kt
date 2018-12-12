@@ -1,5 +1,6 @@
 package com.aleks.aleksiev.codewars.presentation.challengedetails
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.databinding.FragmentChallengeDetailsBinding
+import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
 import com.aleks.aleksiev.codewars.presentation.common.BaseFragment
 import com.aleks.aleksiev.codewars.utils.BundleDelegate
@@ -33,19 +35,18 @@ class ChallengeDetailsFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentChallengeDetailsBinding>(inflater, R.layout.fragment_challenge_details, container, false)
         binding.challenge = challengeDetailsViewModel.challengeDetailsState
+        challengeDetailsViewModel.renderState.observe(viewLifecycleOwner, Observer<RenderState> { renderState(it) })
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        challengeDetailsViewModel.navigator = this.navigator
         challengeDetailsViewModel.getChallengeDetails()
     }
 
     override fun onPause() {
         super.onPause()
         challengeDetailsViewModel.dispose()
-        challengeDetailsViewModel.navigator = null
     }
 
     companion object {

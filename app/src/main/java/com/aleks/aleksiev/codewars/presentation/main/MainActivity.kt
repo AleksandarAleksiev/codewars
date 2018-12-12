@@ -4,10 +4,12 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.View
 import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.databinding.ActivityMainBinding
 import com.aleks.aleksiev.codewars.presentation.common.BaseActivity
 import com.aleks.aleksiev.codewars.presentation.common.navigator.AppNavigation
+import com.aleks.aleksiev.codewars.presentation.common.navigator.Navigation
 import com.aleks.aleksiev.codewars.presentation.viewmodel.ViewModelFactory
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -27,7 +29,10 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
     }
 
-    val navigator by lazy {
+    var rootView: View? = null
+        private set
+
+    val navigator: Navigation by lazy {
         AppNavigation().apply {
             mainActivity = this@MainActivity
         }
@@ -39,6 +44,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.viewModel = mainViewModel
+        rootView = binding.root
         if (savedInstanceState == null) {
             navigator.search()
         }

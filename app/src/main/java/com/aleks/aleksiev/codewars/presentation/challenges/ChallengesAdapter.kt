@@ -8,7 +8,7 @@ import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.databinding.LayoutCompletedChallengeBinding
 import com.aleks.aleksiev.codewars.databinding.LayoutNetworkStateBinding
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel
-import com.aleks.aleksiev.codewars.presentation.challenges.model.NetworkStateModel
+import com.aleks.aleksiev.codewars.presentation.challenges.model.LoadingStateModel
 import com.aleks.aleksiev.codewars.presentation.diffutils.DiffUtilsCallback
 import com.aleks.aleksiev.codewars.utils.ItemClicked
 import com.aleks.aleksiev.codewars.utils.NetworkState
@@ -28,7 +28,7 @@ class ChallengesAdapter @Inject constructor() : PagedListAdapter<ChallengeModel,
             }
             R.layout.layout_network_state -> {
                 val binding = LayoutNetworkStateBinding.inflate(inflater, parent, false)
-                NetworkStateViewHolder(binding)
+                LoadingStateViewHolder(binding)
             }
             else -> throw IllegalArgumentException("unknown view type")
         }
@@ -46,7 +46,7 @@ class ChallengesAdapter @Inject constructor() : PagedListAdapter<ChallengeModel,
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             R.layout.layout_completed_challenge -> (holder as ChallengeViewHolder).bind(getItem(position))
-            R.layout.layout_network_state -> (holder as NetworkStateViewHolder).bind(NetworkStateModel(networkState))
+            R.layout.layout_network_state -> (holder as LoadingStateViewHolder).bind(LoadingStateModel(networkState))
         }
     }
 

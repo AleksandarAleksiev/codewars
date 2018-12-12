@@ -2,6 +2,7 @@ package com.aleks.aleksiev.codewars.presentation.search
 
 import com.aleks.aleksiev.codewars.domain.model.Member
 import com.aleks.aleksiev.codewars.domain.usecase.search.MemberSearchUseCase
+import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.common.BaseViewModel
 import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember
 import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacade
@@ -14,19 +15,19 @@ class SearchViewModel @Inject constructor(private val schedulersFacade: Schedule
 ) : BaseViewModel() {
 
     fun findMember(memberName: String) {
-        navigator?.taskInProgress(true)
+        renderState(RenderState.LoadingState(true))
         add(Single.fromCallable { memberSearchUseCase.findMember(memberName) }
             .subscribeOn(schedulersFacade.ioScheduler())
             .observeOn(schedulersFacade.mainThreadScheduler())
             .subscribe({member ->
-                navigator?.taskInProgress(false)
+                renderState(RenderState.LoadingState(false))
             }, { error ->
-                navigator?.taskInProgress(false)
+                renderState(RenderState.LoadingState(false))
             }))
     }
 
     fun searchHistory(maxSearches: Int) {
-        navigator?.taskInProgress(true)
+        renderState(RenderState.LoadingState(false))
         add(memberSearchUseCase.observeMemberSearch(maxSearches)
             .map { members ->
                 members.map { toFoundMember(it) }
@@ -35,9 +36,9 @@ class SearchViewModel @Inject constructor(private val schedulersFacade: Schedule
             .observeOn(schedulersFacade.mainThreadScheduler())
             .subscribe({members ->
                 searchHistoryUpdateListener.searchHistoryUpdated(members)
-                navigator?.taskInProgress(false)
+                renderState(RenderState.LoadingState(false))
             }, {error ->
-                navigator?.taskInProgress(false)
+                renderState(RenderState.LoadingState(false))
             }))
     }
 

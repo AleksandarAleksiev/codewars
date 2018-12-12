@@ -3,6 +3,7 @@ package com.aleks.aleksiev.codewars.presentation.challengedetails
 import com.aleks.aleksiev.codewars.domain.model.ChallengeDetailsDomainModel
 import com.aleks.aleksiev.codewars.domain.usecase.challenge.ChallengeDetailsUseCase
 import com.aleks.aleksiev.codewars.presentation.BaseTest
+import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.times
@@ -11,6 +12,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import org.junit.Test
 import org.mockito.Mock
+import org.mockito.Mockito
 
 class ChallengeDetailsViewModelTest : BaseTest() {
 
@@ -32,7 +34,7 @@ class ChallengeDetailsViewModelTest : BaseTest() {
     override fun setUp() {
         super.setUp()
         challengeDetailsViewModel = ChallengeDetailsViewModel(challengeDetailsState, schedulersFacade, challengeDetailsUseCase)
-        challengeDetailsViewModel.navigator = navigator
+        challengeDetailsViewModel.renderState.observeForever(renderStateObserver)
     }
 
     @Test
@@ -58,7 +60,7 @@ class ChallengeDetailsViewModelTest : BaseTest() {
         challengeDetailsViewModel.getChallengeDetails()
         triggerActions()
 
-        verify(navigator, times(2)).taskInProgress(any())
+        verify(renderStateObserver, times(2)).onChanged(Mockito.any(RenderState.LoadingState::class.java))
     }
 
     @Test
@@ -84,6 +86,6 @@ class ChallengeDetailsViewModelTest : BaseTest() {
         challengeDetailsViewModel.getChallengeDetails()
         triggerActions()
 
-        verify(navigator, times(2)).taskInProgress(any())
+        verify(renderStateObserver, times(2)).onChanged(Mockito.any(RenderState.LoadingState::class.java))
     }
 }

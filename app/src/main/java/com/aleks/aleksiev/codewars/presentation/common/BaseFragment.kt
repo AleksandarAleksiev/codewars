@@ -2,6 +2,8 @@ package com.aleks.aleksiev.codewars.presentation.common
 
 import android.content.Context
 import android.support.v4.app.Fragment
+import com.aleks.aleksiev.codewars.R
+import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.main.MainActivity
 import com.aleks.aleksiev.codewars.presentation.viewmodel.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
@@ -29,6 +31,15 @@ abstract class BaseFragment : Fragment() {
         super.onResume()
 
         displayHomeButton()
+    }
+
+    protected fun renderState(renderState: RenderState?) {
+        when (renderState) {
+            is RenderState.LoadingState -> navigator?.taskInProgress(renderState.isLoading)
+            is RenderState.MessageErrorState -> navigator?.showSnackBar(renderState.errorMessage, R.color.colorAccent, R.color.white)
+            is RenderState.MessageSuccessState -> navigator?.showSnackBar(renderState.message, R.color.colorPrimary, R.color.white)
+            else -> {}
+        }
     }
 
     private fun displayHomeButton() {

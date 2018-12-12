@@ -4,9 +4,9 @@ import com.aleks.aleksiev.codewars.presentation.diffutils.DiffUtilItemComparable
 import com.aleks.aleksiev.codewars.utils.Constants
 import com.aleks.aleksiev.codewars.utils.NetworkState
 
-data class NetworkStateModel(
+data class LoadingStateModel(
     private val networkState: NetworkState?
-) : DiffUtilItemComparable<NetworkStateModel> {
+) : DiffUtilItemComparable<LoadingStateModel> {
 
     val errorMessage: String
         get() {
@@ -22,11 +22,11 @@ data class NetworkStateModel(
             return networkState is NetworkState.NetworkStateLoading
         }
 
-    override fun areItemsTheSame(newItem: NetworkStateModel): Boolean {
+    override fun areItemsTheSame(newItem: LoadingStateModel): Boolean {
         return this.networkState == newItem.networkState
     }
 
-    override fun areContentsTheSame(newItem: NetworkStateModel): Boolean {
+    override fun areContentsTheSame(newItem: LoadingStateModel): Boolean {
         return this == newItem
     }
 }
