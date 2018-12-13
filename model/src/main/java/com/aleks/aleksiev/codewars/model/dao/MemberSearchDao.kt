@@ -21,9 +21,15 @@ interface MemberSearchDao {
     @Delete
     fun delete(memberSearch: MemberSearch)
 
-    @Query("select * from member_search limit :maxUsers")
-    fun observeMemberSearch(maxUsers: Int): Flowable<List<MemberSearch>>
+    @Query("select * from member_search order by searched_on_date desc limit :maxUsers")
+    fun observeMemberSearchByDate(maxUsers: Int): Flowable<List<MemberSearch>>
+
+    @Query("select * from member_search order by rank desc limit :maxUsers")
+    fun observeMemberSearchByRank(maxUsers: Int): Flowable<List<MemberSearch>>
 
     @Query("select member_user_name from member_search where id = :userId")
     fun getUserName(userId: Long): String
+
+    @Query("select * from member_search where member_user_name = :userName")
+    fun getUser(userName: String): MemberSearch?
 }

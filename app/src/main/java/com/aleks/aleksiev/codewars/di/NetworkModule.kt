@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import com.aleks.aleksiev.codewars.BuildConfig
 import com.aleks.aleksiev.codewars.di.annotation.AppContext
-import com.aleks.aleksiev.codewars.domain.rest.UserController
 import com.aleks.aleksiev.codewars.domain.rest.response.ApiResponseCallAdapterFactory
 import com.google.gson.Gson
 import dagger.Module
@@ -67,7 +66,4 @@ class NetworkModule {
             .addCallAdapterFactory(ApiResponseCallAdapterFactory())
             .build()
     }
-
-    @Provides
-    fun providesUserController(retrofit: Retrofit): UserController = retrofit.create(UserController::class.java)
 }

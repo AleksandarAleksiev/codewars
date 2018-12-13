@@ -1,10 +1,12 @@
 package com.aleks.aleksiev.codewars.presentation.search
 
 import com.aleks.aleksiev.codewars.domain.model.Member
+import com.aleks.aleksiev.codewars.domain.model.SortBy
 import com.aleks.aleksiev.codewars.domain.usecase.search.MemberSearchUseCase
 import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.common.BaseViewModel
 import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember
+import com.aleks.aleksiev.codewars.utils.Constants
 import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacade
 import io.reactivex.Single
 import javax.inject.Inject
@@ -13,6 +15,14 @@ class SearchViewModel @Inject constructor(private val schedulersFacade: Schedule
                                           private val memberSearchUseCase: MemberSearchUseCase,
                                           private val searchHistoryUpdateListener: SearchHistoryUpdateListener
 ) : BaseViewModel() {
+
+    var sortBy: SortBy = SortBy.Date
+        set(value) {
+            if (value != field) {
+                field = value
+                searchHistory()
+            }
+        }
 
     fun findMember(memberName: String) {
         renderState(RenderState.LoadingState(true))
@@ -26,9 +36,10 @@ class SearchViewModel @Inject constructor(private val schedulersFacade: Schedule
             }))
     }
 
-    fun searchHistory(maxSearches: Int) {
+    fun searchHistory() {
+        dispose()
         renderState(RenderState.LoadingState(false))
-        add(memberSearchUseCase.observeMemberSearch(maxSearches)
+        add(memberSearchUseCase.observeMemberSearch(Constants.MAX_SEARCHED_ITEMS_TO_SHOW, sortBy)
             .map { members ->
                 members.map { toFoundMember(it) }
             }
@@ -47,8 +58,8 @@ class SearchViewModel @Inject constructor(private val schedulersFacade: Schedule
             memberId = member.id,
             userName = member.memberUserName,
             name = member.memberName,
-            rank = 0,
-            bestLanguage = ""
+            rank = member.rank,
+            bestLanguage = member.bestLanguage
         )
     }
 }

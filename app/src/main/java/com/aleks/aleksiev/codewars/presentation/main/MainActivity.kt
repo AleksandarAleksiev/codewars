@@ -44,6 +44,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.viewModel = mainViewModel
+        binding.taskInProgressLayout.setOnTouchListener { _, _ -> true }
         rootView = binding.root
         if (savedInstanceState == null) {
             navigator.search()

@@ -10,7 +10,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
-class CodewarsApp : Application(), HasActivityInjector {
+open class CodewarsApp : Application(), HasActivityInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
@@ -24,7 +24,7 @@ class CodewarsApp : Application(), HasActivityInjector {
 
     override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector
 
-    private fun initDaggerComponent() {
+    protected open fun initDaggerComponent() {
         component = DaggerAppComponent
             .builder()
             .application(this)

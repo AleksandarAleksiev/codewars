@@ -1,6 +1,7 @@
 package com.aleks.aleksiev.codewars.di.component
 
 import com.aleks.aleksiev.codewars.CodewarsApp
+import com.aleks.aleksiev.codewars.di.ApiModule
 import com.aleks.aleksiev.codewars.di.AppModule
 import com.aleks.aleksiev.codewars.di.BuilderModule
 import com.aleks.aleksiev.codewars.di.NetworkModule
@@ -17,13 +18,15 @@ import javax.inject.Singleton
     BuilderModule::class,
     ModelModule::class,
     DomainModule::class,
-    NetworkModule::class])
+    NetworkModule::class,
+    ApiModule::class])
 interface AppComponent {
 
     @Component.Builder
     interface Builder {
         @BindsInstance
         fun application(codewarsApp: CodewarsApp): Builder
+
         fun model(modelModule: ModelModule): Builder
         fun build(): AppComponent
     }

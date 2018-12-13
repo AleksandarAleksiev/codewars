@@ -6,4 +6,5 @@ object Constants {
     const val MAX_SEARCHED_ITEMS_TO_SHOW = 5
     const val PAGE_SIZE = 20
     const val MAX_DISPLAY_CHALLENGES_DESCR = 100
+    const val SORT_BY_DATE = "Date"
 }

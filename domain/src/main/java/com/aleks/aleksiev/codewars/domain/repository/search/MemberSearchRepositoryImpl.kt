@@ -1,5 +1,6 @@
 package com.aleks.aleksiev.codewars.domain.repository.search
 
+import com.aleks.aleksiev.codewars.domain.Constants
 import com.aleks.aleksiev.codewars.domain.rest.UserController
 import com.aleks.aleksiev.codewars.domain.rest.response.ApiErrorResponse
 import com.aleks.aleksiev.codewars.domain.rest.response.ApiResponse
@@ -10,9 +11,10 @@ import com.aleks.aleksiev.codewars.model.entities.MemberSearch
 import com.aleks.aleksiev.codewars.model.repository.MemberSearchRepository
 import com.aleks.aleksiev.codewars.model.repository.Repository
 import io.reactivex.Flowable
+import java.util.Date
 import javax.inject.Inject
 
-internal class MemberSearchRepositoryImpl @Inject constructor(
+class MemberSearchRepositoryImpl @Inject constructor(
     private val repository: Repository,
     private val database: CodewarsDatabase,
     private val userController: UserController
@@ -23,16 +25,35 @@ internal class MemberSearchRepositoryImpl @Inject constructor(
     }
 
     override fun findMember(memberName: String): MemberSearch {
-        val response = userController.findUser(memberName)
-        return onApiResponse(response)
+        var result = fetchFromDB(memberName)
+        if (result != null) {
+            result.searchedDate = Date()
+            database.memberSearchDao().update(memberSearch = result)
+        } else {
+            result = fetchNetwork(memberName)
+        }
+        return result
     }
 
     override fun saveMemberSearch(memberSearch: MemberSearch): Long {
         return database.memberSearchDao().insert(memberSearch)
     }
 
-    override fun observeMemberSearch(numberOfSearches: Int): Flowable<List<MemberSearch>>{
-        return database.memberSearchDao().observeMemberSearch(numberOfSearches)
+    override fun observeMemberSearchSortedByDate(numberOfSearches: Int): Flowable<List<MemberSearch>>{
+        return database.memberSearchDao().observeMemberSearchByDate(numberOfSearches)
+    }
+
+    override fun observeMemberSearchSortedByRank(numberOfSearches: Int): Flowable<List<MemberSearch>> {
+        return database.memberSearchDao().observeMemberSearchByRank(numberOfSearches)
+    }
+
+    private fun fetchFromDB(memberName: String): MemberSearch? {
+        return database.memberSearchDao().getUser(userName = memberName)
+    }
+
+    private fun fetchNetwork(memberName: String): MemberSearch {
+        val response = userController.findUser(memberName)
+        return onApiResponse(response)
     }
 
     private fun onApiResponse(response: ApiResponse<MemberSearchResponse>): MemberSearch {
@@ -55,7 +76,10 @@ internal class MemberSearchRepositoryImpl @Inject constructor(
             memberName = memberSearchResponse.name,
             honor = memberSearchResponse.honor,
             clan = memberSearchResponse.clan,
-            leaderBoardPosition = memberSearchResponse.leaderBoardPosition
+            rank = memberSearchResponse.ranks.rank.rank,
+            bestLanguage = memberSearchResponse.ranks.languages.languages.maxBy { it.rank }?.languageName ?: Constants.EMPTY_STRING,
+            leaderBoardPosition = memberSearchResponse.leaderBoardPosition,
+            searchedDate = Date()
         )
     }
 }

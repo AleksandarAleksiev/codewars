@@ -7,5 +7,6 @@ interface MemberSearchRepository : Repository {
     fun getMemberUserName(memberId: Long): String
     fun findMember(memberName: String): MemberSearch
     fun saveMemberSearch(memberSearch: MemberSearch): Long
-    fun observeMemberSearch(numberOfSearches: Int): Flowable<List<MemberSearch>>
+    fun observeMemberSearchSortedByRank(numberOfSearches: Int): Flowable<List<MemberSearch>>
+    fun observeMemberSearchSortedByDate(numberOfSearches: Int): Flowable<List<MemberSearch>>
 }

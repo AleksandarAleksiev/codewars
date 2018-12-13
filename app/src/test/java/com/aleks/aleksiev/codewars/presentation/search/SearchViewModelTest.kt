@@ -32,7 +32,9 @@ class SearchViewModelTest : BaseTest() {
         honor = "test_honor",
         clan = "test_clan",
         leaderBoardPosition = 1,
-        id = 1
+        id = 1,
+        rank = 1,
+        bestLanguage = "Kotlin"
     )
 
     private val searchLimit = 1
@@ -65,8 +67,8 @@ class SearchViewModelTest : BaseTest() {
     @Test
     fun searchedMembersListIsUpdated() {
 
-        whenever(memberSearchUseCase.observeMemberSearch(any())).then { Flowable.fromArray(searchHistory) }
-        searchViewModel.searchHistory(searchLimit)
+        whenever(memberSearchUseCase.observeMemberSearch(any(), any())).then { Flowable.fromArray(searchHistory) }
+        searchViewModel.searchHistory()
         triggerActions()
 
         verify(searchHistoryUpdateListener, times(1)).searchHistoryUpdated(any())
@@ -74,8 +76,8 @@ class SearchViewModelTest : BaseTest() {
 
     @Test
     fun whenLoadingSearchedHistoryTaskInProgressIsCalledTwice() {
-        whenever(memberSearchUseCase.observeMemberSearch(any())).then { Flowable.fromArray(emptyArray<FoundMember>()) }
-        searchViewModel.searchHistory(searchLimit)
+        whenever(memberSearchUseCase.observeMemberSearch(any(), any())).then { Flowable.fromArray(emptyArray<FoundMember>()) }
+        searchViewModel.searchHistory()
         triggerActions()
 
         verify(renderStateObserver, times(2)).onChanged(Mockito.any(RenderState.LoadingState::class.java))

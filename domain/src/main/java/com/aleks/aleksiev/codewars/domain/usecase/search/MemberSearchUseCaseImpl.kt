@@ -1,12 +1,13 @@
 package com.aleks.aleksiev.codewars.domain.usecase.search
 
 import com.aleks.aleksiev.codewars.domain.model.Member
+import com.aleks.aleksiev.codewars.domain.model.SortBy
 import com.aleks.aleksiev.codewars.model.entities.MemberSearch
 import com.aleks.aleksiev.codewars.model.repository.MemberSearchRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-internal class MemberSearchUseCaseImpl @Inject constructor(
+class MemberSearchUseCaseImpl @Inject constructor(
     private val memberSearchRepository: MemberSearchRepository
 ) : MemberSearchUseCase {
     override fun findMember(memberName: String): Member {
@@ -14,23 +15,27 @@ internal class MemberSearchUseCaseImpl @Inject constructor(
         return toMember(memberEntity)
     }
 
-    override fun observeMemberSearch(numberOfSearches: Int): Flowable<List<Member>> {
-        return memberSearchRepository
-            .observeMemberSearch(numberOfSearches)
-            .flatMap { list ->
-                val membersList = list.map { toMember(it) }
-                Flowable.fromCallable { membersList }
-            }
+    override fun observeMemberSearch(numberOfSearches: Int, sortBy: SortBy): Flowable<List<Member>> {
+        val flowable = when (sortBy) {
+            SortBy.Date -> memberSearchRepository.observeMemberSearchSortedByDate(numberOfSearches)
+            SortBy.Rank -> memberSearchRepository.observeMemberSearchSortedByRank(numberOfSearches)
+        }
+        return flowable.flatMap { list ->
+            val membersList = list.map { toMember(it) }
+            Flowable.fromCallable { membersList }
+        }
     }
 
     private fun toMember(memberSearch: MemberSearch): Member {
         return Member(
-            memberUserName = memberSearch.memberUserName,
-            memberName = memberSearch.memberName,
-            honor = memberSearch.honor,
+            id = memberSearch.id,
             clan = memberSearch.clan,
-            leaderBoardPosition = memberSearch.leaderBoardPosition,
-            id = memberSearch.id
+            rank = memberSearch.rank,
+            honor = memberSearch.honor,
+            memberName = memberSearch.memberName,
+            bestLanguage = memberSearch.bestLanguage,
+            memberUserName = memberSearch.memberUserName,
+            leaderBoardPosition = memberSearch.leaderBoardPosition
         )
     }
 }

@@ -6,5 +6,5 @@ data class Ranks(
     @SerializedName("overall")
     val rank: Rank,
     @SerializedName("languages")
-    val languages: Any
+    val languages: Languages
 )

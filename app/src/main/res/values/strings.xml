@@ -13,4 +13,12 @@
     <string name="challenge_description">Description</string>
     <string name="challenge_languages">Languages</string>
     <string name="challenge_tags">Tags</string>
+    <string name="order_by">Sort by</string>
+    <string name="order_by_date">By date</string>
+    <string name="order_by_rank">By rank</string>
+    <string-array name="sort_by_array">
+        <item>Date</item>
+        <item>Rank</item>
+    </string-array>
+
 </resources>

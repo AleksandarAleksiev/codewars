@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "18f6a88e3e3210f3c34d676b3f8847dc",
+    "identityHash": "8b32bc5d5cd7cac06f10ee8b2b116007",
     "entities": [
       {
         "tableName": "member_search",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`member_user_name` TEXT NOT NULL, `member_name` TEXT NOT NULL, `honor` TEXT NOT NULL, `clan` TEXT NOT NULL, `leaderboardPosition` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`member_user_name` TEXT NOT NULL, `member_name` TEXT NOT NULL, `honor` TEXT NOT NULL, `clan` TEXT NOT NULL, `rank` INTEGER NOT NULL, `best_language` TEXT NOT NULL, `leaderboardPosition` INTEGER NOT NULL, `searched_on_date` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "memberUserName",
@@ -33,8 +33,26 @@
             "notNull": true
           },
           {
+            "fieldPath": "rank",
+            "columnName": "rank",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bestLanguage",
+            "columnName": "best_language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "leaderBoardPosition",
             "columnName": "leaderboardPosition",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "searchedDate",
+            "columnName": "searched_on_date",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -139,7 +157,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"18f6a88e3e3210f3c34d676b3f8847dc\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8b32bc5d5cd7cac06f10ee8b2b116007\")"
     ]
   }
 }
