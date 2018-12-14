@@ -2,7 +2,7 @@ package com.aleks.aleksiev.codewars.di
 
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
-import com.aleks.aleksiev.codewars.TestApplication
+import com.aleks.aleksiev.codewars.common.TestApplication
 import com.aleks.aleksiev.codewars.di.annotation.AppContext
 import com.aleks.aleksiev.codewars.domain.rest.model.Languages
 import com.aleks.aleksiev.codewars.presentation.viewmodel.ViewModelFactory

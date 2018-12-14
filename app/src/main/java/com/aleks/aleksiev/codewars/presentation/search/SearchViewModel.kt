@@ -25,20 +25,20 @@ class SearchViewModel @Inject constructor(private val schedulersFacade: Schedule
         }
 
     fun findMember(memberName: String) {
-        renderState(RenderState.LoadingState(true))
+        renderState(RenderState(true))
         add(Single.fromCallable { memberSearchUseCase.findMember(memberName) }
             .subscribeOn(schedulersFacade.ioScheduler())
             .observeOn(schedulersFacade.mainThreadScheduler())
-            .subscribe({member ->
-                renderState(RenderState.LoadingState(false))
+            .subscribe({
+                renderState(RenderState(false))
             }, { error ->
-                renderState(RenderState.LoadingState(false))
+                renderState(RenderState(false, error.message))
             }))
     }
 
     fun searchHistory() {
         dispose()
-        renderState(RenderState.LoadingState(false))
+        renderState(RenderState(true))
         add(memberSearchUseCase.observeMemberSearch(Constants.MAX_SEARCHED_ITEMS_TO_SHOW, sortBy)
             .map { members ->
                 members.map { toFoundMember(it) }
@@ -47,9 +47,9 @@ class SearchViewModel @Inject constructor(private val schedulersFacade: Schedule
             .observeOn(schedulersFacade.mainThreadScheduler())
             .subscribe({members ->
                 searchHistoryUpdateListener.searchHistoryUpdated(members)
-                renderState(RenderState.LoadingState(false))
+                renderState(RenderState(false))
             }, {error ->
-                renderState(RenderState.LoadingState(false))
+                renderState(RenderState(false, error.message))
             }))
     }
 

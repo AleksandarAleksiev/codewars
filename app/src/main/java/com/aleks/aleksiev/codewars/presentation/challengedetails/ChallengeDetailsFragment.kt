@@ -35,7 +35,9 @@ class ChallengeDetailsFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentChallengeDetailsBinding>(inflater, R.layout.fragment_challenge_details, container, false)
         binding.challenge = challengeDetailsViewModel.challengeDetailsState
-        challengeDetailsViewModel.renderState.observe(viewLifecycleOwner, Observer<RenderState> { renderState(it) })
+        challengeDetailsViewModel.renderState.observe(viewLifecycleOwner, Observer<RenderState> {
+            renderState(it)
+        })
         return binding.root
     }
 

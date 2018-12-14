@@ -53,7 +53,9 @@ class SearchFragment : BaseFragment(),
         searchBinding.searchViewModel = searchViewModel
         initView(searchBinding)
 
-        searchViewModel.renderState.observe(viewLifecycleOwner, Observer<RenderState> { renderState(it) })
+        searchViewModel.renderState.observe(viewLifecycleOwner, Observer<RenderState> {
+            renderState(it)
+        })
 
         return searchBinding.root
     }

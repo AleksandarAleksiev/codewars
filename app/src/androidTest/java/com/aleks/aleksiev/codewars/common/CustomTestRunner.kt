@@ -1,4 +1,4 @@
-package com.aleks.aleksiev.codewars
+package com.aleks.aleksiev.codewars.common
 
 import android.app.Application
 import android.content.Context

@@ -1,7 +1,7 @@
 package com.aleks.aleksiev.codewars.di
 
-import com.aleks.aleksiev.codewars.BaseTest
-import com.aleks.aleksiev.codewars.TestApplication
+import com.aleks.aleksiev.codewars.common.BaseTest
+import com.aleks.aleksiev.codewars.common.TestApplication
 import com.aleks.aleksiev.codewars.di.component.AppComponent
 import com.aleks.aleksiev.codewars.domain.di.DomainModule
 import com.aleks.aleksiev.codewars.model.di.ModelTestModule

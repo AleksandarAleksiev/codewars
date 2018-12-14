@@ -1,5 +1,6 @@
 package com.aleks.aleksiev.codewars
 
+import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
@@ -11,10 +12,13 @@ import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.widget.EditText
+import com.aleks.aleksiev.codewars.common.BaseTest
+import com.aleks.aleksiev.codewars.common.atPosition
 import com.aleks.aleksiev.codewars.domain.rest.model.Language
 import com.aleks.aleksiev.codewars.domain.rest.model.Languages
 import com.aleks.aleksiev.codewars.domain.rest.model.Rank
 import com.aleks.aleksiev.codewars.domain.rest.model.Ranks
+import com.aleks.aleksiev.codewars.domain.rest.response.ApiErrorResponse
 import com.aleks.aleksiev.codewars.domain.rest.response.ApiSuccessResponse
 import com.aleks.aleksiev.codewars.domain.rest.response.MemberSearchResponse
 import com.nhaarman.mockitokotlin2.any
@@ -45,7 +49,9 @@ class SearchFragmentTest : BaseTest() {
         )
     )
 
-    private val apiresponse = ApiSuccessResponse(memberSearchResponse)
+    private val errorMessage = "Test error message!"
+    private val apiSuccessResponse = ApiSuccessResponse(memberSearchResponse)
+    private val apiErrorResponse = ApiErrorResponse<MemberSearchResponse>(errorMessage)
 
     @Test
     fun typeSearchUserText() {
@@ -63,7 +69,7 @@ class SearchFragmentTest : BaseTest() {
     fun populateFoundUser() {
         val searchString = "g964"
 
-        whenever(userController.findUser(any())).then { apiresponse }
+        whenever(userController.findUser(any())).then { apiSuccessResponse }
 
         onView(withId(R.id.searchView)).perform(click())
 
@@ -75,5 +81,22 @@ class SearchFragmentTest : BaseTest() {
 
         onView(ViewMatchers.withId(R.id.searchHistoryRecyclerView))
             .check(matches(atPosition(0, withId(R.id.memberSearchLayout))))
+    }
+
+    @Test
+    fun givenErrorWhenSearchingForUserErrorMessageIsShown() {
+        val searchString = "g964"
+
+        whenever(userController.findUser(any())).then { apiErrorResponse }
+
+        onView(withId(R.id.searchView)).perform(click())
+
+        onView(isAssignableFrom(EditText::class.java)).perform(typeText(searchString), pressImeActionButton())
+
+        triggerActions()
+
+        Thread.sleep(1000)
+
+        isSnackBarWithTextDisplayed(InstrumentationRegistry.getTargetContext().applicationContext.getString(R.string.error_message, errorMessage))
     }
 }

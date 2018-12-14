@@ -16,6 +16,7 @@
     <string name="order_by">Sort by</string>
     <string name="order_by_date">By date</string>
     <string name="order_by_rank">By rank</string>
+    <string name="error_message" formatted="true">Oops, not funny surprise: %s</string>
     <string-array name="sort_by_array">
         <item>Date</item>
         <item>Rank</item>

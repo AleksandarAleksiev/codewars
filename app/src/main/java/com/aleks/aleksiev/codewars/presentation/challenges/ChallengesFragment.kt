@@ -88,7 +88,9 @@ class ChallengesFragment : BaseFragment(), ItemClicked<ChallengeModel?> {
 
         challengesViewModel.challenges.observe(viewLifecycleOwner, Observer<PagedList<ChallengeModel>> { challengesAdapter.submitList(it) })
         challengesViewModel.getNetworkState().observe(viewLifecycleOwner, Observer<NetworkState> { challengesAdapter.setNetworkState(it) })
-        challengesViewModel.renderState.observe(viewLifecycleOwner, Observer<RenderState> { renderState(it) })
+        challengesViewModel.renderState.observe(viewLifecycleOwner, Observer<RenderState> {
+            renderState(it)
+        })
     }
 
     private fun selectChallenge(bottomNavigationView: BottomNavigationView) {

@@ -1,4 +1,4 @@
-package com.aleks.aleksiev.codewars
+package com.aleks.aleksiev.codewars.common
 
 import android.support.test.espresso.matcher.BoundedMatcher
 import android.support.v7.widget.RecyclerView
@@ -18,8 +18,7 @@ fun atPosition(position: Int, itemMatcher: Matcher<View>): Matcher<View> {
 
         override fun matchesSafely(view: RecyclerView): Boolean {
             val viewHolder = view.findViewHolderForAdapterPosition(position)
-                ?: // has no item on such position
-                return false
+                ?: return false
             return itemMatcher.matches(viewHolder.itemView)
         }
     }

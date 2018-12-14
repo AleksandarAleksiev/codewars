@@ -3,16 +3,15 @@ package com.aleks.aleksiev.codewars.presentation.challengedetails
 import com.aleks.aleksiev.codewars.domain.model.ChallengeDetailsDomainModel
 import com.aleks.aleksiev.codewars.domain.usecase.challenge.ChallengeDetailsUseCase
 import com.aleks.aleksiev.codewars.presentation.BaseTest
-import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
 import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.argForWhich
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
 
 class ChallengeDetailsViewModelTest : BaseTest() {
 
@@ -60,7 +59,20 @@ class ChallengeDetailsViewModelTest : BaseTest() {
         challengeDetailsViewModel.getChallengeDetails()
         triggerActions()
 
-        verify(renderStateObserver, times(2)).onChanged(Mockito.any(RenderState.LoadingState::class.java))
+        verify(renderStateObserver, times(2)).onChanged(argForWhich { message.isNullOrBlank() })
+    }
+
+    @Test
+    fun givenErrorWhenGetAuthoredChallengeDetailsThenErrorMessageIsRendered() {
+
+        challengeDetailsState.challengeType = ChallengeType.Authored
+
+        whenever(challengeDetailsUseCase.getAuthoredChallengeDetails(any(), any())).then { Single.error<ChallengeDetailsDomainModel>(Exception("Error message")) }
+
+        challengeDetailsViewModel.getChallengeDetails()
+        triggerActions()
+
+        verify(renderStateObserver, times(1)).onChanged(argForWhich { !message.isNullOrBlank() })
     }
 
     @Test
@@ -86,6 +98,19 @@ class ChallengeDetailsViewModelTest : BaseTest() {
         challengeDetailsViewModel.getChallengeDetails()
         triggerActions()
 
-        verify(renderStateObserver, times(2)).onChanged(Mockito.any(RenderState.LoadingState::class.java))
+        verify(renderStateObserver, times(2)).onChanged(argForWhich { message.isNullOrBlank() })
+    }
+
+    @Test
+    fun givenErrorWhenGetCompletedChallengeDetailsThenErrorMessageIsRendered() {
+
+        challengeDetailsState.challengeType = ChallengeType.Completed
+
+        whenever(challengeDetailsUseCase.getCompletedChallengeDetails(any(), any())).then { Single.error<ChallengeDetailsDomainModel>(Exception("Error message")) }
+
+        challengeDetailsViewModel.getChallengeDetails()
+        triggerActions()
+
+        verify(renderStateObserver, times(1)).onChanged(argForWhich { !message.isNullOrBlank() })
     }
 }

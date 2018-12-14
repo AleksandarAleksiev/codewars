@@ -34,11 +34,11 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun renderState(renderState: RenderState?) {
-        when (renderState) {
-            is RenderState.LoadingState -> navigator?.taskInProgress(renderState.isLoading)
-            is RenderState.MessageErrorState -> navigator?.showSnackBar(renderState.errorMessage, R.color.colorAccent, R.color.white)
-            is RenderState.MessageSuccessState -> navigator?.showSnackBar(renderState.message, R.color.colorPrimary, R.color.white)
-            else -> {}
+        renderState?.let {
+            navigator?.taskInProgress(renderState.isLoading)
+            if (!renderState.message.isNullOrBlank()) {
+                navigator?.showSnackBar(getString(R.string.error_message, renderState.message), R.color.colorAccent, R.color.white)
+            }
         }
     }
 

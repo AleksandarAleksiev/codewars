@@ -22,29 +22,29 @@ class ChallengeDetailsViewModel @Inject constructor(
     }
 
     private fun getCompletedChallengeDetails(challengesGroupId: Long, challengeId: String) {
-        renderState(RenderState.LoadingState(true))
+        renderState(RenderState(true))
         add(challengeDetailsUseCase.getCompletedChallengeDetails(challengesGroupId, challengeId)
             .subscribeOn(schedulersFacade.ioScheduler())
             .observeOn(schedulersFacade.mainThreadScheduler())
             .subscribe({challengeDetails ->
                 toChallengeDetailsState(challengeDetails)
-                renderState(RenderState.LoadingState(false))
+                renderState(RenderState(false))
             }, {error ->
-                renderState(RenderState.LoadingState(false))
+                renderState(RenderState(false, error.message))
             })
         )
     }
 
     private fun getAuthoredChallengeDetails(challengesGroupId: Long, challengeId: String) {
-        renderState(RenderState.LoadingState(true))
+        renderState(RenderState(true))
         add(challengeDetailsUseCase.getAuthoredChallengeDetails(challengesGroupId, challengeId)
             .subscribeOn(schedulersFacade.ioScheduler())
             .observeOn(schedulersFacade.mainThreadScheduler())
             .subscribe({challengeDetails ->
                 toChallengeDetailsState(challengeDetails)
-                renderState(RenderState.LoadingState(false))
+                renderState(RenderState(false))
             }, {error ->
-                renderState(RenderState.LoadingState(false))
+                renderState(RenderState(false, error.message))
             })
         )
     }
