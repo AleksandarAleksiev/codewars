@@ -23,6 +23,7 @@ import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember
 import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMembersAdapter
 import com.aleks.aleksiev.codewars.utils.BundleDelegate
 import com.aleks.aleksiev.codewars.utils.Constants
+import com.aleks.aleksiev.codewars.utils.Event
 import com.aleks.aleksiev.codewars.utils.ItemClicked
 import com.aleks.aleksiev.codewars.utils.RecyclerViewItemsSpaceDecoration
 import javax.inject.Inject
@@ -53,8 +54,10 @@ class SearchFragment : BaseFragment(),
         searchBinding.searchViewModel = searchViewModel
         initView(searchBinding)
 
-        searchViewModel.renderState.observe(viewLifecycleOwner, Observer<RenderState> {
-            renderState(it)
+        searchViewModel.renderState.observe(viewLifecycleOwner, Observer<Event<RenderState>> {
+            it?.getContentIfNotHandled()?.let { state ->
+                renderState(state)
+            }
         })
 
         return searchBinding.root

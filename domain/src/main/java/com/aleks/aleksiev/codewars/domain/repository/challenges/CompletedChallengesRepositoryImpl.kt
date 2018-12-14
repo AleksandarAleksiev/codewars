@@ -1,5 +1,6 @@
 package com.aleks.aleksiev.codewars.domain.repository.challenges
 
+import com.aleks.aleksiev.codewars.domain.Constants
 import com.aleks.aleksiev.codewars.domain.rest.UserController
 import com.aleks.aleksiev.codewars.domain.rest.response.ApiErrorResponse
 import com.aleks.aleksiev.codewars.domain.rest.response.ApiResponse
@@ -74,8 +75,8 @@ class CompletedChallengesRepositoryImpl  @Inject constructor(
     private fun toChallengeEntity(challenge: ChallengeResponse): ChallengeEntity {
         return ChallengeEntity(
             challengeId = challenge.challengeId,
-            challengeName = challenge.challengeName,
-            challengeSlug = challenge.challengeSlug,
+            challengeName = challenge.challengeName ?: Constants.EMPTY_STRING,
+            challengeSlug = challenge.challengeSlug ?: Constants.EMPTY_STRING,
             completedAt = challenge.completedAt,
             completedLanguages = challenge.completedLanguages
         )

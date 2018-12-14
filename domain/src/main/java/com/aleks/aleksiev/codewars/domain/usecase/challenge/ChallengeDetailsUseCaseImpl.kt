@@ -3,6 +3,7 @@ package com.aleks.aleksiev.codewars.domain.usecase.challenge
 import com.aleks.aleksiev.codewars.domain.Constants
 import com.aleks.aleksiev.codewars.domain.formatString
 import com.aleks.aleksiev.codewars.domain.model.ChallengeDetailsDomainModel
+import com.aleks.aleksiev.codewars.domain.singleCreateOptional
 import com.aleks.aleksiev.codewars.model.entities.model.AuthoredChallenge
 import com.aleks.aleksiev.codewars.model.entities.model.CompletedChallenge
 import com.aleks.aleksiev.codewars.model.repository.AuthoredChallengesRepository
@@ -16,7 +17,7 @@ class ChallengeDetailsUseCaseImpl @Inject constructor(
 ) : ChallengeDetailsUseCase {
 
     override fun getCompletedChallengeDetails(challengesGroupId: Long, challengeId: String): Single<ChallengeDetailsDomainModel> {
-        return Single.fromCallable {
+        return singleCreateOptional {
             val data = completedChallengesRepository.getCompletedChallenges(challengesGroupId = challengesGroupId)
             val challenge = data?.challenges?.completedChallenges?.firstOrNull { it.challengeId.equals(challengeId, true) }
             if (challenge != null) {
@@ -28,7 +29,7 @@ class ChallengeDetailsUseCaseImpl @Inject constructor(
     }
 
     override fun getAuthoredChallengeDetails(challengesGroupId: Long, challengeId: String): Single<ChallengeDetailsDomainModel> {
-        return Single.fromCallable {
+        return singleCreateOptional {
             val data = authoredChallengesRepository.getAuthoredChallenges(challengesGroupId = challengesGroupId)
             val challenge = data?.challenges?.authoredChallenges?.firstOrNull { it.challengeId.equals(challengeId, true) }
             if (challenge != null) {

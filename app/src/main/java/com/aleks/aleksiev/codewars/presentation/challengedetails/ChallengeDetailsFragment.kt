@@ -13,6 +13,7 @@ import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
 import com.aleks.aleksiev.codewars.presentation.common.BaseFragment
 import com.aleks.aleksiev.codewars.utils.BundleDelegate
+import com.aleks.aleksiev.codewars.utils.Event
 
 class ChallengeDetailsFragment : BaseFragment() {
 
@@ -35,8 +36,10 @@ class ChallengeDetailsFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentChallengeDetailsBinding>(inflater, R.layout.fragment_challenge_details, container, false)
         binding.challenge = challengeDetailsViewModel.challengeDetailsState
-        challengeDetailsViewModel.renderState.observe(viewLifecycleOwner, Observer<RenderState> {
-            renderState(it)
+        challengeDetailsViewModel.renderState.observe(viewLifecycleOwner, Observer<Event<RenderState>> {
+            it?.getContentIfNotHandled()?.let { state ->
+                renderState(state)
+            }
         })
         return binding.root
     }

@@ -69,7 +69,7 @@ class SearchViewModelTest : BaseTest() {
         searchViewModel.findMember(memberName)
         triggerActions()
 
-        verify(renderStateObserver, times(1)).onChanged(argForWhich { !message.isNullOrBlank() })
+        verify(renderStateObserver, times(1)).onChanged(argForWhich { peekContent().message.isNullOrBlank() })
     }
 
     @Test
@@ -83,12 +83,12 @@ class SearchViewModelTest : BaseTest() {
     }
 
     @Test
-    fun whenLoadingSearchedHistoryTaskInProgressIsCalledTwice() {
+    fun whenLoadingSearchedHistoryTaskInProgressIsNotCalled() {
         whenever(memberSearchUseCase.observeMemberSearch(any(), any())).then { Flowable.fromArray(emptyList<Member>()) }
         searchViewModel.searchHistory()
         triggerActions()
 
-        verify(renderStateObserver, times(2)).onChanged(argForWhich { message.isNullOrBlank() })
+        verify(renderStateObserver, times(0)).onChanged(argForWhich { peekContent().message.isNullOrBlank() })
     }
 
     @Test
@@ -97,6 +97,6 @@ class SearchViewModelTest : BaseTest() {
         searchViewModel.searchHistory()
         triggerActions()
 
-        verify(renderStateObserver, times(1)).onChanged(argForWhich { !message.isNullOrBlank() })
+        verify(renderStateObserver, times(1)).onChanged(argForWhich { !peekContent().message.isNullOrBlank() })
     }
 }

@@ -5,6 +5,7 @@ import com.aleks.aleksiev.codewars.domain.usecase.challenge.ChallengeDetailsUseC
 import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
 import com.aleks.aleksiev.codewars.presentation.common.BaseViewModel
+import com.aleks.aleksiev.codewars.utils.Event
 import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacade
 import javax.inject.Inject
 
@@ -22,29 +23,29 @@ class ChallengeDetailsViewModel @Inject constructor(
     }
 
     private fun getCompletedChallengeDetails(challengesGroupId: Long, challengeId: String) {
-        renderState(RenderState(true))
+        renderState(Event(RenderState(true)))
         add(challengeDetailsUseCase.getCompletedChallengeDetails(challengesGroupId, challengeId)
             .subscribeOn(schedulersFacade.ioScheduler())
             .observeOn(schedulersFacade.mainThreadScheduler())
             .subscribe({challengeDetails ->
                 toChallengeDetailsState(challengeDetails)
-                renderState(RenderState(false))
+                renderState(Event(RenderState(false)))
             }, {error ->
-                renderState(RenderState(false, error.message))
+                renderState(Event(RenderState(false, error.message)))
             })
         )
     }
 
     private fun getAuthoredChallengeDetails(challengesGroupId: Long, challengeId: String) {
-        renderState(RenderState(true))
+        renderState(Event(RenderState(true)))
         add(challengeDetailsUseCase.getAuthoredChallengeDetails(challengesGroupId, challengeId)
             .subscribeOn(schedulersFacade.ioScheduler())
             .observeOn(schedulersFacade.mainThreadScheduler())
             .subscribe({challengeDetails ->
                 toChallengeDetailsState(challengeDetails)
-                renderState(RenderState(false))
+                renderState(Event(RenderState(false)))
             }, {error ->
-                renderState(RenderState(false, error.message))
+                renderState(Event(RenderState(false, error.message)))
             })
         )
     }

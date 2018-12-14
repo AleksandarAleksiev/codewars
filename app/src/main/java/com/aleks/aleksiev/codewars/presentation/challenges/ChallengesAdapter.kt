@@ -12,35 +12,41 @@ import com.aleks.aleksiev.codewars.presentation.challenges.model.LoadingStateMod
 import com.aleks.aleksiev.codewars.presentation.diffutils.DiffUtilsCallback
 import com.aleks.aleksiev.codewars.utils.ItemClicked
 import com.aleks.aleksiev.codewars.utils.NetworkState
+import kotlinx.android.synthetic.main.layout_network_state.view.retryLoadingButton
 import javax.inject.Inject
+
+typealias RetryCallback = () -> Unit
 
 class ChallengesAdapter @Inject constructor() : PagedListAdapter<ChallengeModel, RecyclerView.ViewHolder>(DiffUtilsCallback<ChallengeModel>()) {
 
+    private val retryCallback: RetryCallback? = null
     private var networkState: NetworkState? = null
     var itemClickedHandler: ItemClicked<ChallengeModel?>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val viewHolder = when (viewType) {
+        return when (viewType) {
             R.layout.layout_completed_challenge -> {
                 val binding = LayoutCompletedChallengeBinding.inflate(inflater, parent, false)
-                ChallengeViewHolder(binding)
+                ChallengeViewHolder(binding).also { vh ->
+                    vh.itemView.setOnClickListener {
+                        val position = vh.adapterPosition
+                        if (position != RecyclerView.NO_POSITION) {
+                            itemClickedHandler?.onItemClicked(getItem(position))
+                        }
+                    }
+                }
             }
             R.layout.layout_network_state -> {
                 val binding = LayoutNetworkStateBinding.inflate(inflater, parent, false)
-                LoadingStateViewHolder(binding)
+                val loadingStateVH = LoadingStateViewHolder(binding)
+                loadingStateVH.itemView.retryLoadingButton.setOnClickListener {
+                    retryCallback?.invoke()
+                }
+                loadingStateVH
             }
             else -> throw IllegalArgumentException("unknown view type")
         }
-
-        viewHolder.itemView.setOnClickListener {
-            val position = viewHolder.getAdapterPosition()
-            if (position != RecyclerView.NO_POSITION) {
-                itemClickedHandler?.onItemClicked(getItem(position))
-            }
-        }
-
-        return viewHolder
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

@@ -59,7 +59,7 @@ class ChallengeDetailsViewModelTest : BaseTest() {
         challengeDetailsViewModel.getChallengeDetails()
         triggerActions()
 
-        verify(renderStateObserver, times(2)).onChanged(argForWhich { message.isNullOrBlank() })
+        verify(renderStateObserver, times(2)).onChanged(argForWhich { getContentIfNotHandled()?.message.isNullOrBlank() })
     }
 
     @Test
@@ -72,7 +72,9 @@ class ChallengeDetailsViewModelTest : BaseTest() {
         challengeDetailsViewModel.getChallengeDetails()
         triggerActions()
 
-        verify(renderStateObserver, times(1)).onChanged(argForWhich { !message.isNullOrBlank() })
+        verify(renderStateObserver, times(1)).onChanged(argForWhich {
+            !peekContent().message.isNullOrBlank()
+        })
     }
 
     @Test
@@ -98,7 +100,7 @@ class ChallengeDetailsViewModelTest : BaseTest() {
         challengeDetailsViewModel.getChallengeDetails()
         triggerActions()
 
-        verify(renderStateObserver, times(2)).onChanged(argForWhich { message.isNullOrBlank() })
+        verify(renderStateObserver, times(2)).onChanged(argForWhich { peekContent().message.isNullOrBlank() })
     }
 
     @Test
@@ -111,6 +113,6 @@ class ChallengeDetailsViewModelTest : BaseTest() {
         challengeDetailsViewModel.getChallengeDetails()
         triggerActions()
 
-        verify(renderStateObserver, times(1)).onChanged(argForWhich { !message.isNullOrBlank() })
+        verify(renderStateObserver, times(1)).onChanged(argForWhich { !peekContent().message.isNullOrBlank() })
     }
 }

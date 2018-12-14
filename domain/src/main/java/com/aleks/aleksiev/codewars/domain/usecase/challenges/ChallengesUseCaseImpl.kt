@@ -4,6 +4,7 @@ import com.aleks.aleksiev.codewars.domain.Constants
 import com.aleks.aleksiev.codewars.domain.formatString
 import com.aleks.aleksiev.codewars.domain.model.ChallengeDomainModel
 import com.aleks.aleksiev.codewars.domain.model.ChallengesDomainModel
+import com.aleks.aleksiev.codewars.domain.singleCreateOptional
 import com.aleks.aleksiev.codewars.model.entities.AuthoredChallengeEntity
 import com.aleks.aleksiev.codewars.model.entities.CompletedChallengeEntity
 import com.aleks.aleksiev.codewars.model.repository.AuthoredChallengesRepository
@@ -21,17 +22,23 @@ class ChallengesUseCaseImpl @Inject constructor(
 ) : ChallengesUseCase {
 
     override fun fetchAuthoredChallenges(userId: Long): Single<ChallengesDomainModel> {
-        return Single.fromCallable {
+        return singleCreateOptional {
             val userName = userRepository.getMemberUserName(userId)
             val authoredChallenges = authoredChallengesRepository.fetchAuthoredChallenges(userId, userName)
+            if (authoredChallenges.challenges.authoredChallenges.isNullOrEmpty()) {
+                throw Exception("Challenges not found") //TODO: Custom error
+            }
             toChallengesModel(authoredChallenges)
         }
     }
 
     override fun fetchCompletedChallenges(userId: Long, page: Int): Single<ChallengesDomainModel> {
-        return Single.fromCallable {
+        return singleCreateOptional {
             val userName = userRepository.getMemberUserName(userId)
             val completedChallenges = completedChallengesRepository.fetchCompletedChallenges(userId, userName, page)
+            if (completedChallenges.challenges.completedChallenges.isNullOrEmpty()) {
+                throw Exception("Challenges not found") //TODO: Custom error
+            }
             toChallengesModel(completedChallenges)
         }
     }

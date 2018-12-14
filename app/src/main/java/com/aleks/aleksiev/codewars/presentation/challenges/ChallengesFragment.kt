@@ -18,6 +18,7 @@ import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
 import com.aleks.aleksiev.codewars.presentation.common.BaseFragment
 import com.aleks.aleksiev.codewars.utils.BundleDelegate
+import com.aleks.aleksiev.codewars.utils.Event
 import com.aleks.aleksiev.codewars.utils.ItemClicked
 import com.aleks.aleksiev.codewars.utils.NetworkState
 import com.aleks.aleksiev.codewars.utils.RecyclerViewItemsSpaceDecoration
@@ -54,8 +55,8 @@ class ChallengesFragment : BaseFragment(), ItemClicked<ChallengeModel?> {
     }
 
     override fun onPause() {
-        super.onPause()
         challengesViewModel.dispose()
+        super.onPause()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -88,8 +89,10 @@ class ChallengesFragment : BaseFragment(), ItemClicked<ChallengeModel?> {
 
         challengesViewModel.challenges.observe(viewLifecycleOwner, Observer<PagedList<ChallengeModel>> { challengesAdapter.submitList(it) })
         challengesViewModel.getNetworkState().observe(viewLifecycleOwner, Observer<NetworkState> { challengesAdapter.setNetworkState(it) })
-        challengesViewModel.renderState.observe(viewLifecycleOwner, Observer<RenderState> {
-            renderState(it)
+        challengesViewModel.renderState.observe(viewLifecycleOwner, Observer<Event<RenderState>> {
+            it?.getContentIfNotHandled()?.let { state ->
+                renderState(state)
+            }
         })
     }
 

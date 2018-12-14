@@ -51,6 +51,11 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         }
     }
 
+    override fun onBackPressed() {
+        navigator.taskInProgress(false)
+        super.onBackPressed()
+    }
+
     fun taskInProgress(inProgress: Boolean) {
         mainViewModel.viewState.taskInProgress = inProgress
     }

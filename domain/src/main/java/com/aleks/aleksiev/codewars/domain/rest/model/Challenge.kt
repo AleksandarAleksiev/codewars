@@ -7,9 +7,9 @@ data class Challenge(
     @SerializedName("id")
     val challengeId: String,
     @SerializedName("name")
-    val challengeName: String,
+    val challengeName: String?,
     @SerializedName("slug")
-    val challengeSlug: String,
+    val challengeSlug: String?,
     @SerializedName("completedAt")
     val completedAt: Date,
     @SerializedName("completedLanguages")

@@ -48,7 +48,6 @@ class ChallengesViewModel @Inject constructor(
             .setEnablePlaceholders(false)
             .build()
         challenges = LivePagedListBuilder<Int, ChallengeModel>(sourceFactory, config).build()
-
     }
 
     fun getNetworkState(): LiveData<NetworkState> = Transformations.switchMap<CompleteChallengesDataSource, NetworkState>(
@@ -64,9 +63,14 @@ class ChallengesViewModel @Inject constructor(
 
     fun invalidate(@IdRes itemId: Int) {
         if (itemId != this.selectedItem) {
+            dispose()
             this.selectedItem = itemId
             sourceFactory.completeChallengesDataSourceLiveData.value?.invalidate()
         }
+    }
+
+    fun retry() {
+        sourceFactory.completeChallengesDataSourceLiveData.value?.retry()
     }
 
     private fun fetchCompletedChallenges(page: Int): Single<ChallengesModel> {

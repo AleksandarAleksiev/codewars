@@ -4,14 +4,15 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.aleks.aleksiev.codewars.presentation.RenderState
+import com.aleks.aleksiev.codewars.utils.Event
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 abstract class BaseViewModel : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
-    private val _renderState = MutableLiveData<RenderState>()
-    val renderState: LiveData<RenderState> = _renderState
+    private val _renderState = MutableLiveData<Event<RenderState>>()
+    val renderState: LiveData<Event<RenderState>> = _renderState
 
     fun add(disposable: Disposable) = compositeDisposable.add(disposable)
     fun dispose() {
@@ -23,7 +24,7 @@ abstract class BaseViewModel : ViewModel() {
         dispose()
     }
 
-    protected fun renderState(renderState: RenderState) {
+    fun renderState(renderState: Event<RenderState>) {
         _renderState.postValue(renderState)
     }
 }
