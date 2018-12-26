@@ -1,6 +1,8 @@
 package com.aleks.aleksiev.codewars.domain.repository.search
 
 import com.aleks.aleksiev.codewars.domain.Constants
+import com.aleks.aleksiev.codewars.domain.model.ApiErrorException
+import com.aleks.aleksiev.codewars.domain.model.EmptyResponseException
 import com.aleks.aleksiev.codewars.domain.rest.UserController
 import com.aleks.aleksiev.codewars.domain.rest.response.ApiErrorResponse
 import com.aleks.aleksiev.codewars.domain.rest.response.ApiResponse
@@ -59,8 +61,8 @@ class MemberSearchRepositoryImpl @Inject constructor(
     private fun onApiResponse(response: ApiResponse<MemberSearchResponse>): MemberSearch {
         return when (response) {
             is ApiSuccessResponse -> cacheResponse(response.body)
-            is ApiErrorResponse -> throw Exception(response.errorMessage)
-            else -> throw Exception()
+            is ApiErrorResponse -> throw ApiErrorException(response.errorMessage)
+            else -> throw EmptyResponseException()
         }
     }
 
