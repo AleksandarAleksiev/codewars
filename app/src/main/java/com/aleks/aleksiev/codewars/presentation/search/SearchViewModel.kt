@@ -1,5 +1,7 @@
 package com.aleks.aleksiev.codewars.presentation.search
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import com.aleks.aleksiev.codewars.domain.model.Member
 import com.aleks.aleksiev.codewars.domain.model.SortBy
 import com.aleks.aleksiev.codewars.domain.usecase.search.MemberSearchUseCase
@@ -13,9 +15,12 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(private val schedulersFacade: SchedulersFacade,
-                                          private val memberSearchUseCase: MemberSearchUseCase,
-                                          private val searchHistoryUpdateListener: SearchHistoryUpdateListener
+                                          private val memberSearchUseCase: MemberSearchUseCase
 ) : BaseViewModel() {
+
+    private val _members = MutableLiveData<List<FoundMember>>()
+    val members: LiveData<List<FoundMember>>
+        get() = _members
 
     var sortBy: SortBy = SortBy.Date
         set(value) {
@@ -45,9 +50,9 @@ class SearchViewModel @Inject constructor(private val schedulersFacade: Schedule
             }
             .subscribeOn(schedulersFacade.ioScheduler())
             .observeOn(schedulersFacade.mainThreadScheduler())
-            .subscribe({members ->
-                searchHistoryUpdateListener.searchHistoryUpdated(members)
-            }, {error ->
+            .subscribe({ members ->
+                _members.value = members
+            }, { error ->
                 renderState(Event(RenderState(false, error.message)))
             }))
     }

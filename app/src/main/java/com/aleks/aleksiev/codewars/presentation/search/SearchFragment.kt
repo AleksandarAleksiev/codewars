@@ -30,7 +30,6 @@ import javax.inject.Inject
 
 class SearchFragment : BaseFragment(),
     SearchView.OnQueryTextListener,
-    SearchHistoryUpdateListener,
     ItemClicked<FoundMember>, AdapterView.OnItemSelectedListener {
 
     @Inject
@@ -57,6 +56,12 @@ class SearchFragment : BaseFragment(),
         searchViewModel.renderState.observe(viewLifecycleOwner, Observer<Event<RenderState>> {
             it?.getContentIfNotHandled()?.let { state ->
                 renderState(state)
+            }
+        })
+
+        searchViewModel.members.observe(viewLifecycleOwner, Observer {
+            it?.let { members ->
+                foundMembersAdapter.submitList(members)
             }
         })
 
@@ -88,10 +93,6 @@ class SearchFragment : BaseFragment(),
 
     override fun onQueryTextChange(queryText: String?): Boolean {
         return false
-    }
-
-    override fun searchHistoryUpdated(searchHistory: List<FoundMember>) {
-        foundMembersAdapter.submitList(searchHistory)
     }
 
     override fun onItemClicked(item: FoundMember) {
@@ -134,7 +135,6 @@ class SearchFragment : BaseFragment(),
             R.array.sort_by_array,
             R.layout.layout_sort_by
         ).also { adapter ->
-            //adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
             searchBinding.sortBySpinner.adapter = adapter
         }
     }

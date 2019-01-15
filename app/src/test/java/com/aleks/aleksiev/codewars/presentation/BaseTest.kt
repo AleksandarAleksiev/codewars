@@ -3,6 +3,7 @@ package com.aleks.aleksiev.codewars.presentation
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
 import com.aleks.aleksiev.codewars.presentation.common.navigator.Navigation
+import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember
 import com.aleks.aleksiev.codewars.utils.Event
 import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacade
 import com.nhaarman.mockitokotlin2.whenever
@@ -24,6 +25,8 @@ abstract class BaseTest {
     lateinit var schedulersFacade: SchedulersFacade
     @Mock
     lateinit var renderStateObserver: Observer<Event<RenderState>>
+    @Mock
+    lateinit var membersObserver: Observer<List<FoundMember>>
 
     private val testScheduler = TestScheduler()
 

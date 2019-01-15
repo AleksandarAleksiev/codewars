@@ -19,8 +19,6 @@ class SearchViewModelTest : BaseTest() {
 
     @Mock
     lateinit var memberSearchUseCase: MemberSearchUseCase
-    @Mock
-    lateinit var searchHistoryUpdateListener: SearchHistoryUpdateListener
 
     @InjectMocks
     private lateinit var searchViewModel: SearchViewModel
@@ -43,6 +41,7 @@ class SearchViewModelTest : BaseTest() {
     override fun setUp() {
         super.setUp()
         searchViewModel.renderState.observeForever(renderStateObserver)
+        searchViewModel.members.observeForever(membersObserver)
     }
 
     @Test
@@ -79,7 +78,7 @@ class SearchViewModelTest : BaseTest() {
         searchViewModel.searchHistory()
         triggerActions()
 
-        verify(searchHistoryUpdateListener, times(1)).searchHistoryUpdated(any())
+        verify(membersObserver, times(1)).onChanged(any())
     }
 
     @Test

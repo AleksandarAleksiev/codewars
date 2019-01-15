@@ -3,7 +3,6 @@ package com.aleks.aleksiev.codewars.presentation.search.di
 import android.arch.lifecycle.ViewModel
 import com.aleks.aleksiev.codewars.di.annotation.ViewModelKey
 import com.aleks.aleksiev.codewars.presentation.search.SearchFragment
-import com.aleks.aleksiev.codewars.presentation.search.SearchHistoryUpdateListener
 import com.aleks.aleksiev.codewars.presentation.search.SearchViewModel
 import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember
 import com.aleks.aleksiev.codewars.utils.ItemClicked
@@ -18,9 +17,6 @@ abstract class SearchModule {
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
     abstract fun bindsSearchViewModel(searchViewModel: SearchViewModel): ViewModel
-
-    @Binds
-    abstract fun bindsSearchHistoryUpdateListener(searchFragment: SearchFragment): SearchHistoryUpdateListener
 
     @Binds
     abstract fun bindsFoundMemberItemClicked(searchFragment: SearchFragment): ItemClicked<FoundMember>
