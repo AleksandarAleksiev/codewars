@@ -2,7 +2,6 @@ package com.aleks.aleksiev.codewars.presentation
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
-import com.aleks.aleksiev.codewars.presentation.common.navigator.Navigation
 import com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember
 import com.aleks.aleksiev.codewars.utils.Event
 import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacade
@@ -19,8 +18,6 @@ abstract class BaseTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
-    @Mock
-    lateinit var navigation: Navigation
     @Mock
     lateinit var schedulersFacade: SchedulersFacade
     @Mock

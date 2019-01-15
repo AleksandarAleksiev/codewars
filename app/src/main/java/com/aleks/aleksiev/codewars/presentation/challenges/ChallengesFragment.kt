@@ -54,11 +54,6 @@ class ChallengesFragment : BaseFragment(), ItemClicked<ChallengeModel?> {
         return binding.root
     }
 
-    override fun onPause() {
-        challengesViewModel.dispose()
-        super.onPause()
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.memberId = this.challengesViewModel.userId

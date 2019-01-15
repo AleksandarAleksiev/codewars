@@ -50,6 +50,11 @@ class ChallengesViewModel @Inject constructor(
         challenges = LivePagedListBuilder<Int, ChallengeModel>(sourceFactory, config).build()
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        this.dispose()
+    }
+
     fun getNetworkState(): LiveData<NetworkState> = Transformations.switchMap<CompleteChallengesDataSource, NetworkState>(
         sourceFactory.completeChallengesDataSourceLiveData) { it.networkState }
 
