@@ -12,7 +12,6 @@ import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Flowable
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString
-import org.mockito.InjectMocks
 import org.mockito.Mock
 
 class SearchViewModelTest : BaseTest() {
@@ -20,7 +19,6 @@ class SearchViewModelTest : BaseTest() {
     @Mock
     lateinit var memberSearchUseCase: MemberSearchUseCase
 
-    @InjectMocks
     private lateinit var searchViewModel: SearchViewModel
 
     private val member = Member(
@@ -40,6 +38,8 @@ class SearchViewModelTest : BaseTest() {
 
     override fun setUp() {
         super.setUp()
+        whenever(memberSearchUseCase.observeMemberSearch(any(), any())).then { Flowable.fromArray(emptyList<Member>()) }
+        searchViewModel = SearchViewModel(schedulersFacade, memberSearchUseCase)
         searchViewModel.renderState.observeForever(renderStateObserver)
         searchViewModel.members.observeForever(membersObserver)
     }

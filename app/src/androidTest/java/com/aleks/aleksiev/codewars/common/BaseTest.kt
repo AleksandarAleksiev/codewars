@@ -14,6 +14,7 @@ import com.aleks.aleksiev.codewars.domain.rest.UserController
 import com.aleks.aleksiev.codewars.presentation.main.MainActivity
 import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacade
 import com.nhaarman.mockitokotlin2.whenever
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.TestScheduler
 import org.hamcrest.CoreMatchers
 import org.junit.After
@@ -54,7 +55,7 @@ abstract class BaseTest {
         testComponent.injectBase(this)
 
         whenever(schedulersFacade.ioScheduler()).then { testScheduler }
-        whenever(schedulersFacade.mainThreadScheduler()).then { testScheduler }
+        whenever(schedulersFacade.mainThreadScheduler()).then { AndroidSchedulers.mainThread() }
         whenever(schedulersFacade.computationScheduler()).then { testScheduler }
 
         testActivityRule.launchActivity(null)

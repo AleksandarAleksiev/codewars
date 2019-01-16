@@ -30,6 +30,15 @@ class SearchViewModel @Inject constructor(private val schedulersFacade: Schedule
             }
         }
 
+    init {
+        searchHistory()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        this.dispose()
+    }
+
     fun findMember(memberName: String) {
         renderState(Event(RenderState(true)))
         add(Single.fromCallable { memberSearchUseCase.findMember(memberName) }
@@ -43,11 +52,9 @@ class SearchViewModel @Inject constructor(private val schedulersFacade: Schedule
     }
 
     fun searchHistory() {
-        dispose()
         add(memberSearchUseCase.observeMemberSearch(Constants.MAX_SEARCHED_ITEMS_TO_SHOW, sortBy)
-            .map { members ->
-                members.map { toFoundMember(it) }
-            }
+            .filter { members -> members.isNotEmpty() }
+            .map { members -> members.map { toFoundMember(it) } }
             .subscribeOn(schedulersFacade.ioScheduler())
             .observeOn(schedulersFacade.mainThreadScheduler())
             .subscribe({ members ->

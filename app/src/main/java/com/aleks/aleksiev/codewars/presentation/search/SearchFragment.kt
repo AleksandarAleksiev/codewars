@@ -68,16 +68,6 @@ class SearchFragment : BaseFragment(),
         return searchBinding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        searchViewModel.searchHistory()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        searchViewModel.dispose()
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.sortBy = searchViewModel.sortBy.ordinal
