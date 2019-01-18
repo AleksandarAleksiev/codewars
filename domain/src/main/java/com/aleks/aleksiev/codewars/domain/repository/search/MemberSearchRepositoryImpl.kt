@@ -27,14 +27,10 @@ class MemberSearchRepositoryImpl @Inject constructor(
     }
 
     override fun findMember(memberName: String): MemberSearch {
-        var result = fetchFromDB(memberName)
-        if (result != null) {
-            result.searchedDate = Date()
-            database.memberSearchDao().update(memberSearch = result)
-        } else {
-            result = fetchNetwork(memberName)
-        }
-        return result
+        return fetchFromDB(memberName)?.also {
+            it.searchedDate = Date()
+            database.memberSearchDao().update(memberSearch = it)
+        } ?: fetchNetwork(memberName)
     }
 
     override fun saveMemberSearch(memberSearch: MemberSearch): Long {

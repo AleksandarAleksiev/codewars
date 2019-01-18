@@ -6,6 +6,6 @@
     <color name="transparent_black">#b9474748</color>
     <color name="white">#ffffff</color>
     <color name="strong_grey">#53535A</color>
-    <color name="dark_grey">#404044</color>
-    <color name="black">#2a2a2d</color>
+    <color name="dark_grey">#2D2D2E</color>
+    <color name="black">#000000</color>
 </resources>

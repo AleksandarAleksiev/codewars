@@ -5,7 +5,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
@@ -25,7 +24,6 @@ import com.aleks.aleksiev.codewars.utils.BundleDelegate
 import com.aleks.aleksiev.codewars.utils.Constants
 import com.aleks.aleksiev.codewars.utils.Event
 import com.aleks.aleksiev.codewars.utils.ItemClicked
-import com.aleks.aleksiev.codewars.utils.RecyclerViewItemsSpaceDecoration
 import javax.inject.Inject
 
 class SearchFragment : BaseFragment(),
@@ -110,13 +108,9 @@ class SearchFragment : BaseFragment(),
         searchBinding.searchView.clearFocus()
         searchBinding.searchView.setOnQueryTextListener(this)
 
-        val topBottomSpace = resources.getDimensionPixelSize(R.dimen.top_margin)
-        val startEndSpace = resources.getDimensionPixelSize(R.dimen.top_margin)
         val layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         searchBinding.searchHistoryRecyclerView.layoutManager = layoutManager
         searchBinding.searchHistoryRecyclerView.adapter = foundMembersAdapter
-        searchBinding.searchHistoryRecyclerView.addItemDecoration(DividerItemDecoration(this.context, layoutManager.orientation))
-        searchBinding.searchHistoryRecyclerView.addItemDecoration(RecyclerViewItemsSpaceDecoration(startEndSpace, topBottomSpace, startEndSpace, topBottomSpace))
 
         searchBinding.sortBySpinner.onItemSelectedListener = this
 

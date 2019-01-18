@@ -21,33 +21,42 @@
             app:iconifiedByDefault="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="@dimen/content_padding"
+            android:layout_marginEnd="@dimen/content_padding"/>
 
         <View
             android:id="@+id/topSeparatorView"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/strong_grey"
-            app:layout_constraintTop_toBottomOf="@+id/searchView"/>
+            app:layout_constraintTop_toBottomOf="@+id/searchView"
+            android:layout_marginStart="@dimen/content_padding"
+            android:layout_marginEnd="@dimen/content_padding"/>
 
         <android.support.v7.widget.AppCompatTextView
             style="@style/LabelTextViewStyle"
             android:id="@+id/sortByTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/top_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/topSeparatorView"
-            android:text="@string/order_by"/>
+            app:layout_constraintBottom_toTopOf="@+id/bottomSeparatorView"
+            app:layout_constraintVertical_bias="0.5"
+            android:text="@string/order_by"
+            android:layout_marginStart="@dimen/content_padding"
+            android:layout_marginEnd="@dimen/content_padding"/>
 
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/sortBySpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/top_margin"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/sortByTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sortByTextView"/>
+            app:layout_constraintTop_toBottomOf="@+id/topSeparatorView"
+            android:layout_marginStart="@dimen/content_padding"
+            android:layout_marginEnd="@dimen/content_padding"/>
 
         <View
             android:id="@+id/bottomSeparatorView"
@@ -55,7 +64,9 @@
             android:layout_height="1dp"
             android:background="@color/strong_grey"
             android:layout_marginTop="@dimen/top_margin"
-            app:layout_constraintTop_toBottomOf="@+id/sortBySpinner"/>
+            app:layout_constraintTop_toBottomOf="@+id/sortBySpinner"
+            android:layout_marginStart="@dimen/content_padding"
+            android:layout_marginEnd="@dimen/content_padding"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/searchHistoryRecyclerView"

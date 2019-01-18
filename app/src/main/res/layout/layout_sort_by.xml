@@ -2,9 +2,8 @@
 <android.support.v7.widget.AppCompatTextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/LabelTextViewStyle"
-    android:layout_marginTop="@dimen/top_margin"
-    android:layout_marginBottom="@dimen/bottom_margin"
+    style="@style/DetailsTextViewStyle"
+    android:padding="@dimen/content_padding"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:text="Test" />
