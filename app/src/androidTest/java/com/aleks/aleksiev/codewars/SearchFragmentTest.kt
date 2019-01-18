@@ -7,10 +7,12 @@ import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import android.support.test.espresso.action.ViewActions.pressImeActionButton
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
+import android.support.v7.widget.RecyclerView
 import android.widget.EditText
 import com.aleks.aleksiev.codewars.common.BaseTest
 import com.aleks.aleksiev.codewars.common.atPosition
@@ -77,10 +79,11 @@ class SearchFragmentTest : BaseTest() {
 
         triggerActions()
 
-        Thread.sleep(1000)
+        onView(withId(R.id.searchHistoryRecyclerView))
+            .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))
 
         onView(ViewMatchers.withId(R.id.searchHistoryRecyclerView))
-            .check(matches(atPosition(0, withId(R.id.memberSearchLayout))))
+            .check(matches(atPosition(0, R.id.userNameTextView, withText(memberSearchResponse.userName))))
     }
 
     @Test

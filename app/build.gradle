@@ -53,7 +53,6 @@ dependencies {
     implementation "com.android.support:design:$supportVersion"
     implementation "com.android.support:support-v4:$supportVersion"
     implementation "android.arch.paging:runtime:$pagingVersion"
-    implementation 'com.android.support:support-v4:28.0.0'
     kapt "android.arch.lifecycle:compiler:$lifeCycleVersion"
 
     //test dependencies
@@ -63,6 +62,7 @@ dependencies {
     testImplementation "android.arch.core:core-testing:$lifeCycleVersion"
     androidTestImplementation "com.android.support.test:runner:$testRunnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoCoreVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espressoCoreVersion"
     androidTestImplementation "com.android.support.test:rules:$testRunnerVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
     androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"

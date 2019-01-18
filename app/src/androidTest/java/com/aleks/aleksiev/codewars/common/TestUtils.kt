@@ -1,5 +1,6 @@
 package com.aleks.aleksiev.codewars.common
 
+import android.support.annotation.IdRes
 import android.support.test.espresso.matcher.BoundedMatcher
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -7,7 +8,7 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 
 
-fun atPosition(position: Int, itemMatcher: Matcher<View>): Matcher<View> {
+fun atPosition(position: Int, @IdRes viewId: Int, itemMatcher: Matcher<View>): Matcher<View> {
     checkNotNull(itemMatcher)
     return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
 
@@ -19,7 +20,9 @@ fun atPosition(position: Int, itemMatcher: Matcher<View>): Matcher<View> {
         override fun matchesSafely(view: RecyclerView): Boolean {
             val viewHolder = view.findViewHolderForAdapterPosition(position)
                 ?: return false
-            return itemMatcher.matches(viewHolder.itemView)
+            return viewHolder.itemView.findViewById<View?>(viewId)?.let {
+                itemMatcher.matches(it)
+            } ?: false
         }
     }
 }

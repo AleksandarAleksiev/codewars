@@ -11,6 +11,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.support.v4.app.Fragment
 import com.aleks.aleksiev.codewars.di.TestComponent
 import com.aleks.aleksiev.codewars.domain.rest.UserController
+import com.aleks.aleksiev.codewars.model.CodewarsDatabase
 import com.aleks.aleksiev.codewars.presentation.main.MainActivity
 import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacade
 import com.nhaarman.mockitokotlin2.whenever
@@ -42,6 +43,9 @@ abstract class BaseTest {
     @Inject
     lateinit var schedulersFacade: SchedulersFacade
 
+    @Inject
+    lateinit var codewarsDb: CodewarsDatabase
+
     private lateinit var testComponent: TestComponent
 
     private val testScheduler = TestScheduler()
@@ -64,6 +68,7 @@ abstract class BaseTest {
     @After
     fun tearDown() {
         testActivityRule.finishActivity()
+        codewarsDb.close()
     }
 
     fun setupFragment(fragment: Fragment, fragmentTag: String) {

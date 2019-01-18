@@ -33,6 +33,8 @@ class SearchFragment : BaseFragment(),
     @Inject
     lateinit var foundMembersAdapter: FoundMembersAdapter
 
+    lateinit var searchBinding: FragmentSearchBinding
+
     private val searchViewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory)[SearchViewModel::class.java]
     }
@@ -47,9 +49,9 @@ class SearchFragment : BaseFragment(),
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val searchBinding = DataBindingUtil.inflate<FragmentSearchBinding>(inflater, R.layout.fragment_search, container, false)
+        searchBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         searchBinding.searchViewModel = searchViewModel
-        initView(searchBinding)
+        initView()
 
         searchViewModel.renderState.observe(viewLifecycleOwner, Observer<Event<RenderState>> {
             it?.getContentIfNotHandled()?.let { state ->
@@ -73,6 +75,7 @@ class SearchFragment : BaseFragment(),
 
     override fun onQueryTextSubmit(queryText: String?): Boolean {
         parentActivity?.hideKeyboard()
+        searchBinding.searchView.clearFocus()
         queryText?.let {
             searchViewModel.findMember(it)
         }
@@ -101,7 +104,7 @@ class SearchFragment : BaseFragment(),
         }
     }
 
-    private fun initView(searchBinding: FragmentSearchBinding) {
+    private fun initView() {
         searchBinding.searchView.isIconified = false
         searchBinding.searchView.isSubmitButtonEnabled = true
         searchBinding.searchView.isActivated = true
