@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -33,7 +36,9 @@ class SearchFragment : BaseFragment(),
     @Inject
     lateinit var foundMembersAdapter: FoundMembersAdapter
 
-    lateinit var searchBinding: FragmentSearchBinding
+    private lateinit var searchBinding: FragmentSearchBinding
+
+    private var searchView: SearchView? = null
 
     private val searchViewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory)[SearchViewModel::class.java]
@@ -44,10 +49,13 @@ class SearchFragment : BaseFragment(),
         savedInstanceState?.let {
             searchViewModel.sortBy = SortBy.fromInt(it.sortBy)
         }
+
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
         // Inflate the layout for this fragment
         searchBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         searchBinding.searchViewModel = searchViewModel
@@ -68,6 +76,27 @@ class SearchFragment : BaseFragment(),
         return searchBinding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        menu?.clear()
+        inflater?.inflate(R.menu.action_bar_menu, menu)
+
+        searchView = menu?.findItem(R.id.actionSearch)?.actionView as? SearchView
+        searchView?.let {
+            it.isIconified = false
+            it.isSubmitButtonEnabled = true
+            it.isActivated = true
+            it.clearFocus()
+            it.setOnQueryTextListener(this)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.actionSearch -> true
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.sortBy = searchViewModel.sortBy.ordinal
@@ -75,7 +104,7 @@ class SearchFragment : BaseFragment(),
 
     override fun onQueryTextSubmit(queryText: String?): Boolean {
         parentActivity?.hideKeyboard()
-        searchBinding.searchView.clearFocus()
+        searchView?.clearFocus()
         queryText?.let {
             searchViewModel.findMember(it)
         }
@@ -105,12 +134,6 @@ class SearchFragment : BaseFragment(),
     }
 
     private fun initView() {
-        searchBinding.searchView.isIconified = false
-        searchBinding.searchView.isSubmitButtonEnabled = true
-        searchBinding.searchView.isActivated = true
-        searchBinding.searchView.clearFocus()
-        searchBinding.searchView.setOnQueryTextListener(this)
-
         val layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         searchBinding.searchHistoryRecyclerView.layoutManager = layoutManager
         searchBinding.searchHistoryRecyclerView.adapter = foundMembersAdapter

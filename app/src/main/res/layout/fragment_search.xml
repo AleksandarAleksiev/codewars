@@ -13,34 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:queryHint="@string/app_name"
-            app:iconifiedByDefault="true"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="@dimen/content_padding"
-            android:layout_marginEnd="@dimen/content_padding"/>
-
-        <View
-            android:id="@+id/topSeparatorView"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/strong_grey"
-            app:layout_constraintTop_toBottomOf="@+id/searchView"
-            android:layout_marginStart="@dimen/content_padding"
-            android:layout_marginEnd="@dimen/content_padding"/>
-
         <android.support.v7.widget.AppCompatTextView
             style="@style/LabelTextViewStyle"
             android:id="@+id/sortByTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/topSeparatorView"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/bottomSeparatorView"
             app:layout_constraintVertical_bias="0.5"
             android:text="@string/order_by"
@@ -54,7 +33,7 @@
             android:layout_marginTop="@dimen/top_margin"
             app:layout_constraintStart_toEndOf="@+id/sortByTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/topSeparatorView"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/content_padding"
             android:layout_marginEnd="@dimen/content_padding"/>
 
