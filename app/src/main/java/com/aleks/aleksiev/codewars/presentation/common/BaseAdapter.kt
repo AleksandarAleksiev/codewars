@@ -1,7 +1,7 @@
 package com.aleks.aleksiev.codewars.presentation.common
 
-import android.databinding.ViewDataBinding
-import android.support.v7.recyclerview.extensions.ListAdapter
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.ListAdapter
 import com.aleks.aleksiev.codewars.presentation.diffutils.DiffUtilItemComparable
 import com.aleks.aleksiev.codewars.presentation.diffutils.DiffUtilsCallback
 

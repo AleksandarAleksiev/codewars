@@ -1,7 +1,7 @@
 package com.aleks.aleksiev.codewars.presentation.challenges
 
-import android.arch.lifecycle.Observer
-import android.arch.paging.PagedList
+import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.domain.model.ChallengeDomainModel
 import com.aleks.aleksiev.codewars.domain.model.ChallengesDomainModel

@@ -1,7 +1,7 @@
 package com.aleks.aleksiev.codewars.presentation.challenges
 
-import android.arch.paging.PagedListAdapter
-import android.support.v7.widget.RecyclerView
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.aleks.aleksiev.codewars.R

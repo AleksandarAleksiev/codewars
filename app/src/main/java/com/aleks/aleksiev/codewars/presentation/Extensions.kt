@@ -2,7 +2,7 @@ package com.aleks.aleksiev.codewars.presentation
 
 import android.app.Activity
 import android.content.Context
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView

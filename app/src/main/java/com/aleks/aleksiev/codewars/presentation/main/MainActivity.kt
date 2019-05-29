@@ -1,9 +1,9 @@
 package com.aleks.aleksiev.codewars.presentation.main
 
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.View
 import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.databinding.ActivityMainBinding

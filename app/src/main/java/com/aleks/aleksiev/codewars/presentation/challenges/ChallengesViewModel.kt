@@ -1,10 +1,10 @@
 package com.aleks.aleksiev.codewars.presentation.challenges
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Transformations
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
-import android.support.annotation.IdRes
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import androidx.annotation.IdRes
 import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.domain.model.ChallengeDomainModel
 import com.aleks.aleksiev.codewars.domain.model.ChallengesDomainModel

@@ -1,6 +1,6 @@
 package com.aleks.aleksiev.codewars.di
 
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import com.aleks.aleksiev.codewars.common.TestApplication
 import com.aleks.aleksiev.codewars.di.annotation.AppContext

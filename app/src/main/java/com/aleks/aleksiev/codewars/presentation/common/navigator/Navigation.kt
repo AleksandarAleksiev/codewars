@@ -1,7 +1,7 @@
 package com.aleks.aleksiev.codewars.presentation.common.navigator
 
-import android.support.annotation.ColorRes
-import android.support.annotation.StringRes
+import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
 
 interface Navigation {

@@ -9,20 +9,20 @@
             name="member"
             type="com.aleks.aleksiev.codewars.presentation.search.foundmembers.FoundMember"/>
     </data>
-    <android.support.design.card.MaterialCardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/content_padding"
         app:strokeColor="@color/colorPrimary"
         app:strokeWidth="@dimen/card_stroke_width">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/memberSearchLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/content_padding">
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/userNameTextInputLayout"
                 style="@style/LabelTextViewStyle"
                 android:layout_width="0dp"
@@ -32,7 +32,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/user_user_name"/>
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/userNameTextView"
                 style="@style/TitleTextViewStyle"
                 android:layout_width="0dp"
@@ -44,7 +44,7 @@
                 tools:text="@tools:sample/full_names"/>
 
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/nameTextInputLayout"
                 style="@style/LabelTextViewStyle"
                 android:layout_width="0dp"
@@ -56,7 +56,7 @@
                 android:visibility="@{TextUtils.isEmpty(member.name) ? View.GONE : View.VISIBLE}"
                 android:text="@string/user_name"/>
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/nameTextView"
                 style="@style/DetailsTextViewStyle"
                 android:layout_width="0dp"
@@ -68,7 +68,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="@tools:sample/full_names"/>
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/rankTextInputLayout"
                 style="@style/LabelTextViewStyle"
                 android:layout_width="0dp"
@@ -79,7 +79,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/user_rank"/>
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/rankTextView"
                 style="@style/DetailsTextViewStyle"
                 android:text="@{member.rank}"
@@ -90,7 +90,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="1"/>
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/bestLanguageTextInputLayout"
                 style="@style/LabelTextViewStyle"
                 android:layout_width="0dp"
@@ -102,7 +102,7 @@
                 android:visibility="@{TextUtils.isEmpty(member.bestLanguage) ? View.GONE : View.VISIBLE}"
                 android:text="@string/user_best_language"/>
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/bestLanguageTextView"
                 style="@style/DetailsTextViewStyle"
                 android:layout_width="0dp"
@@ -114,6 +114,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="Best language: C#"/>
 
-        </android.support.constraint.ConstraintLayout>
-    </android.support.design.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

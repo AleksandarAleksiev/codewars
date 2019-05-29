@@ -9,11 +9,11 @@
             name="challenge"
             type="com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel"/>
     </data>
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/challengeTextLayout"
             style="@style/LabelTextViewStyle"
             android:layout_width="0dp"
@@ -24,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/challenge_name"/>
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/challengeTextView"
             style="@style/TitleTextViewStyle"
             android:focusable="false"
@@ -38,7 +38,7 @@
             android:text="@{TextUtils.isEmpty(challenge.challengeName) ? @string/unknown : challenge.challengeName}"
             tools:text="@tools:sample/full_names"/>
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/challengeAtTextLayout"
             style="@style/LabelTextViewStyle"
             android:layout_width="0dp"
@@ -50,7 +50,7 @@
             android:visibility="@{TextUtils.isEmpty(challenge.completedAt) ? View.GONE : View.VISIBLE}"
             android:text="@string/completed_at"/>
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/challengeAtTextView"
             style="@style/DetailsTextViewStyle"
             android:layout_width="match_parent"
@@ -62,7 +62,7 @@
             android:visibility="@{TextUtils.isEmpty(challenge.completedAt) ? View.GONE : View.VISIBLE}"
             tools:text="@tools:sample/date/ddmmyy"/>
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/challengeDescriptionTextLayout"
             style="@style/LabelTextViewStyle"
             android:layout_width="0dp"
@@ -74,7 +74,7 @@
             android:visibility="@{TextUtils.isEmpty(challenge.challengeDescription) ? View.GONE : View.VISIBLE}"
             android:text="@string/challenge_description"/>
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/challengeDescriptionTextView"
             style="@style/DetailsTextViewStyleAutoSize"
             android:layout_width="match_parent"
@@ -87,5 +87,5 @@
             android:visibility="@{TextUtils.isEmpty(challenge.challengeDescription) ? View.GONE : View.VISIBLE}"
             tools:text="@tools:sample/full_names"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

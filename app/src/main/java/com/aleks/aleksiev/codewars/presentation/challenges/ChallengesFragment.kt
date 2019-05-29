@@ -1,13 +1,13 @@
 package com.aleks.aleksiev.codewars.presentation.challenges
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.arch.paging.PagedList
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.paging.PagedList
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,10 +69,19 @@ class ChallengesFragment : BaseFragment(), ItemClicked<ChallengeModel?> {
     private fun initView(binding: FragmentChallengesBinding) {
         val topBottomSpace = resources.getDimensionPixelSize(R.dimen.top_margin)
         val startEndSpace = resources.getDimensionPixelSize(R.dimen.top_margin)
-        val linearLayoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.VERTICAL, false)
+        val linearLayoutManager = LinearLayoutManager(
+            this.requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
         binding.challengesRecyclerView.layoutManager = linearLayoutManager
         binding.challengesRecyclerView.adapter = challengesAdapter
-        binding.challengesRecyclerView.addItemDecoration(DividerItemDecoration(this.context, linearLayoutManager.orientation))
+        binding.challengesRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                this.context,
+                linearLayoutManager.orientation
+            )
+        )
         binding.challengesRecyclerView.addItemDecoration(RecyclerViewItemsSpaceDecoration(startEndSpace, topBottomSpace, startEndSpace, topBottomSpace))
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {

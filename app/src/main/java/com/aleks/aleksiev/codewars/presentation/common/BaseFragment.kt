@@ -1,7 +1,7 @@
 package com.aleks.aleksiev.codewars.presentation.common
 
 import android.content.Context
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.main.MainActivity

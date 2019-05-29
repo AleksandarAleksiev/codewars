@@ -1,10 +1,10 @@
 package com.aleks.aleksiev.codewars.presentation.common.navigator
 
-import android.support.annotation.ColorRes
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
-import android.support.v4.app.FragmentManager
-import android.support.v4.content.ContextCompat
+import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.FragmentManager
+import androidx.core.content.ContextCompat
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan

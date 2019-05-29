@@ -1,7 +1,7 @@
 package com.aleks.aleksiev.codewars.presentation.challenges.datasource
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.paging.DataSource
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.DataSource
 import com.aleks.aleksiev.codewars.presentation.challenges.ChallengesViewModel
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel
 import com.aleks.aleksiev.codewars.utils.scheduler.SchedulersFacade

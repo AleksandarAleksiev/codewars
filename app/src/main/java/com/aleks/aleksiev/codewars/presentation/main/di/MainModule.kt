@@ -1,6 +1,6 @@
 package com.aleks.aleksiev.codewars.presentation.main.di
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.aleks.aleksiev.codewars.di.annotation.ViewModelKey
 import com.aleks.aleksiev.codewars.presentation.main.MainViewModel
 import dagger.Binds

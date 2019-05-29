@@ -1,12 +1,12 @@
 package com.aleks.aleksiev.codewars.presentation.search
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.widget.SearchView
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.databinding.FragmentSearchBinding
 import com.aleks.aleksiev.codewars.domain.model.SortBy
@@ -83,7 +84,7 @@ class SearchFragment : BaseFragment(),
         searchView = menu?.findItem(R.id.actionSearch)?.actionView as? SearchView
         searchView?.let {
             it.isIconified = false
-            it.isSubmitButtonEnabled = true
+            it.isSubmitButtonEnabled = false
             it.isActivated = true
             it.clearFocus()
             it.setOnQueryTextListener(this)
@@ -134,7 +135,11 @@ class SearchFragment : BaseFragment(),
     }
 
     private fun initView() {
-        val layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+        val layoutManager = LinearLayoutManager(
+            this.context,
+            RecyclerView.VERTICAL,
+            false
+        )
         searchBinding.searchHistoryRecyclerView.layoutManager = layoutManager
         searchBinding.searchHistoryRecyclerView.adapter = foundMembersAdapter
 

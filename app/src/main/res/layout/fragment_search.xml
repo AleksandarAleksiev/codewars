@@ -9,11 +9,11 @@
             type="com.aleks.aleksiev.codewars.presentation.search.SearchViewModel"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             style="@style/LabelTextViewStyle"
             android:id="@+id/sortByTextView"
             android:layout_width="0dp"
@@ -26,7 +26,7 @@
             android:layout_marginStart="@dimen/content_padding"
             android:layout_marginEnd="@dimen/content_padding"/>
 
-        <android.support.v7.widget.AppCompatSpinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/sortBySpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             android:layout_marginStart="@dimen/content_padding"
             android:layout_marginEnd="@dimen/content_padding"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchHistoryRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -60,6 +60,6 @@
             tools:layoutManager="LinearLayoutManager"
             tools:orientation="vertical"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -1,6 +1,6 @@
 package com.aleks.aleksiev.codewars.model.converters
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.aleks.aleksiev.codewars.model.entities.model.CompletedChallenges
 import com.google.gson.GsonBuilder
 

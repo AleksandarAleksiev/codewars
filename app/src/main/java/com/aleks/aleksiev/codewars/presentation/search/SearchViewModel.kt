@@ -1,7 +1,7 @@
 package com.aleks.aleksiev.codewars.presentation.search
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.aleks.aleksiev.codewars.domain.model.Member
 import com.aleks.aleksiev.codewars.domain.model.SortBy
 import com.aleks.aleksiev.codewars.domain.usecase.search.MemberSearchUseCase

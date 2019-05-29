@@ -1,6 +1,6 @@
 package com.aleks.aleksiev.codewars.model.di
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.content.Context
 import com.aleks.aleksiev.codewars.model.CodewarsDatabase
 import com.aleks.aleksiev.codewars.model.CodewarsDb

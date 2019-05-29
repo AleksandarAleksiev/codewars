@@ -1,7 +1,7 @@
 package com.aleks.aleksiev.codewars.presentation.challengedetails
 
-import android.databinding.BaseObservable
-import android.databinding.Bindable
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import com.aleks.aleksiev.codewars.BR
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeType
 import com.aleks.aleksiev.codewars.utils.Constants

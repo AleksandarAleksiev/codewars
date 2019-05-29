@@ -1,7 +1,7 @@
 package com.aleks.aleksiev.codewars.presentation.challenges.datasource
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.paging.PageKeyedDataSource
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.PageKeyedDataSource
 import com.aleks.aleksiev.codewars.presentation.RenderState
 import com.aleks.aleksiev.codewars.presentation.challenges.ChallengesViewModel
 import com.aleks.aleksiev.codewars.presentation.challenges.model.ChallengeModel
