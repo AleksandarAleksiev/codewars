@@ -1,7 +1,6 @@
 package com.aleks.aleksiev.codewars.common
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import android.support.design.R
 import androidx.test.InstrumentationRegistry
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions
@@ -9,6 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import androidx.fragment.app.Fragment
+import com.aleks.aleksiev.codewars.R
 import com.aleks.aleksiev.codewars.di.TestComponent
 import com.aleks.aleksiev.codewars.domain.rest.UserController
 import com.aleks.aleksiev.codewars.model.CodewarsDatabase
